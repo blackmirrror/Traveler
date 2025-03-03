@@ -21,4 +21,10 @@ dependencyResolutionManagement {
 
 rootProject.name = "Traveler"
 include(":app")
- 
+include(":bottom-navigation")
+include(":navigator")
+include(":style")
+include(":feature:map")
+include(":feature:chats")
+include(":feature:account")
+include(":feature:news")

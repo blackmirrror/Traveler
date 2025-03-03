@@ -1,4 +1,4 @@
-package ru.blackmirrror.traveler.ui.theme
+package ru.blackmirrror.style.ui
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

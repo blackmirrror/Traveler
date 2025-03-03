@@ -1,6 +1,5 @@
-package ru.blackmirrror.traveler.ui.theme
+package ru.blackmirrror.style.ui
 
-import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
