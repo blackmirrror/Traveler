@@ -7,4 +7,14 @@ plugins {
     alias(libs.plugins.android.library) apply false
     alias(libs.plugins.ksp) apply false
     alias(libs.plugins.dagger.hilt) apply false
+    id("com.autonomousapps.dependency-analysis") version "2.10.1"
+}
+dependencyAnalysis {
+    issues {
+        all {
+            onAny {
+                severity("warn")
+            }
+        }
+    }
 }

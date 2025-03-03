@@ -22,6 +22,8 @@ hilt = "2.51.1"
 hilt-nav-compose = "1.1.0"
 compose-material-nav = "1.7.0-alpha04+"
 
+deps-analys = "1.25.0"
+
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -59,4 +61,5 @@ jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "jetbrai
 android-library = { id = "com.android.library", version.ref = "agp" }
 ksp = { id = "com.google.devtools.ksp", version = "2.0.0-1.0.23" }
 dagger-hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
+dependency-analysis = { id = "com.autonomousapps.dependency-analysis", version.ref = "deps-analys" }
 

@@ -6,7 +6,6 @@ import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.ui.window.DialogProperties
 import androidx.navigation.NamedNavArgument
-import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavDeepLink
 
 @OptIn(ExperimentalAnimationApi::class)

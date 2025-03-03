@@ -27,8 +27,8 @@ import ru.blackmirrror.bottom_navigation.MapRoute
 import ru.blackmirrror.navigator.TravelerNavigator
 import ru.blackmirrror.navigator.NavigatorEvent
 import ru.blackmirrror.style.shape.BottomSheetShapes
+import ru.blackmirrror.style.ui.TravelerTheme
 import ru.blackmirrror.traveler.navigation.addBottomNavigationDestinations
-import ru.blackmirrror.traveler.ui.theme.TravelerTheme
 import javax.inject.Inject
 
 
@@ -42,7 +42,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)
         setContent {
-            TravelerTheme{
+            TravelerTheme {
                 Surface {
                     TravelerScaffold(travelerNavigator)
                 }
