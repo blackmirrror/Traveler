@@ -39,6 +39,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 }
 
@@ -67,6 +68,10 @@ dependencies {
     ksp(libs.hilt.android.compiler)
 
     implementation(libs.compose.material.navigation)
+
+    implementation(libs.google.maps)
+    implementation(libs.google.maps.compose)
+    implementation(libs.google.location)
 
     implementation(project(":bottom-navigation"))
     implementation(project(":navigator"))
