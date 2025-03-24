@@ -60,4 +60,8 @@ dependencies {
     implementation(libs.hilt.android)
     implementation(libs.hilt.navigation.compose)
     ksp(libs.hilt.android.compiler)
+
+    implementation(project(":component"))
+
+    implementation("me.saket.swipe:swipe:1.3.0")
 }

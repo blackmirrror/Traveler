@@ -66,4 +66,5 @@ dependencies {
     implementation(libs.google.location)
 
     implementation(project(":component"))
+    implementation(project(":navigator"))
 }

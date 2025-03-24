@@ -1,0 +1,28 @@
+package ru.blackmirrror.traveler.navigation
+
+import androidx.compose.runtime.Composable
+import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.composable
+import ru.blackmirrror.account.presentation.ui.EditAccountScreen
+import ru.blackmirrror.auth.presentation.ui.OtpVerificationScreen
+import ru.blackmirrror.auth.presentation.ui.PhoneEmailScreen
+import ru.blackmirrror.destinations.AccountEditDestination
+import ru.blackmirrror.destinations.AuthEnterOtpDestination
+import ru.blackmirrror.destinations.AuthPhoneEmailDestination
+import ru.blackmirrror.navigator.NavigationDestination
+
+private val composableDestinations: Map<NavigationDestination, @Composable () -> Unit> = mapOf(
+    AuthEnterOtpDestination to { OtpVerificationScreen() },
+    AuthPhoneEmailDestination to { PhoneEmailScreen()},
+    AccountEditDestination to { EditAccountScreen() }
+)
+
+fun NavGraphBuilder.addComposableDestinations(navController: NavHostController) {
+    composableDestinations.forEach { entry ->
+        val destination = entry.key
+        composable(destination.route(), destination.arguments, destination.deepLinks) {
+            entry.value()
+        }
+    }
+}

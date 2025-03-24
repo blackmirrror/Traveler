@@ -1,4 +1,4 @@
-package ru.blackmirrror.component
+package ru.blackmirrror.auth
 
 import org.junit.Test
 
