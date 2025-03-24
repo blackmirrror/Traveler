@@ -12,11 +12,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.navigation.ModalBottomSheetLayout
 //noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.navigation.rememberBottomSheetNavigator
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.view.WindowCompat
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
@@ -24,11 +26,14 @@ import androidx.navigation.plusAssign
 import dagger.hilt.android.AndroidEntryPoint
 import ru.blackmirrror.bottom_navigation.TravelerBottomNavigation
 import ru.blackmirrror.bottom_navigation.MapRoute
+import ru.blackmirrror.map.ui.Map
 import ru.blackmirrror.navigator.TravelerNavigator
 import ru.blackmirrror.navigator.NavigatorEvent
 import ru.blackmirrror.style.shape.BottomSheetShapes
 import ru.blackmirrror.style.ui.TravelerTheme
 import ru.blackmirrror.traveler.navigation.addBottomNavigationDestinations
+import ru.blackmirrror.traveler.navigation.addBottomSheetDestinations
+import ru.blackmirrror.traveler.navigation.addComposableDestinations
 import javax.inject.Inject
 
 
@@ -50,6 +55,15 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
+
+@Composable
+@Preview(showBackground = true)
+fun Swoe() {
+    MaterialTheme {
+        Map()
+    }
+}
+
 
 
 @Composable
@@ -77,7 +91,7 @@ fun TravelerScaffold(travelerNavigator: TravelerNavigator) {
 
     ModalBottomSheetLayout(
         bottomSheetNavigator = bottomSheetNavigator,
-        sheetShape = BottomSheetShapes.medium
+        sheetShape = BottomSheetShapes.medium,
     ) {
         Scaffold(
             bottomBar = {
@@ -88,10 +102,12 @@ fun TravelerScaffold(travelerNavigator: TravelerNavigator) {
                 modifier = Modifier.padding(paddingValues),
                 navController = navController,
                 startDestination = MapRoute.route,
-                enterTransition = { fadeIn(animationSpec = tween(0)) },
-                exitTransition = { fadeOut(animationSpec = tween(0)) },
+                enterTransition = { fadeIn(animationSpec = tween(200)) },
+                exitTransition = { fadeOut(animationSpec = tween(200)) },
             ) {
                 addBottomNavigationDestinations(navController)
+                addBottomSheetDestinations(navController)
+                addComposableDestinations(navController)
             }
         }
     }

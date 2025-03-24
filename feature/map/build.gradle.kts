@@ -61,5 +61,10 @@ dependencies {
     implementation(libs.hilt.navigation.compose)
     ksp(libs.hilt.android.compiler)
 
+    implementation(libs.google.maps)
+    implementation(libs.google.maps.compose)
+    implementation(libs.google.location)
 
+    implementation(project(":component"))
+    implementation(project(":navigator"))
 }

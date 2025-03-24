@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="auth_title_phone">Авторизация</string>
+    <string name="auth_title_phone_edit">Изменение номера телефона</string>
+    <string name="auth_title_email">Почта</string>
+    <string name="auth_title_email_edit">Изменение почты</string>
+    <string name="auth_title_code">Введите код</string>
+    <string name="auth_des_phone">Введите Ваш номер телефона — мы отправим код для подтверждения</string>
+    <string name="auth_des_email">Введите Вашу почту — мы отправим код для подтверждения</string>
+    <string name="auth_des_code_phone">Введите код, отправленный на номер</string>
+    <string name="auth_des_code_email">Введите код, отправленный на почту</string>
+    <string name="auth_hint_phone">Номер телефона</string>
+    <string name="auth_hint_email">Почта</string>
+    <string name="auth_btn_send_otp">Отправить код</string>
+    <string name="auth_btn_send_otp_again">Отправить код еще раз</string>
+    <string name="auth_des_registration">Регистрируясь, вы принимаете условия</string>
+    <string name="auth_des_policy">Политики конфиденциальности</string>
+
+    <string name="account_title_fill_profile">Заполните профиль</string>
+    <string name="account_des_fill_profile">Чтобы легко обмениваться сообщениями и делиться интересными локациями!</string>
+    <string name="account_btn_more">Подробнее</string>
+    <string name="account_btn_favorite">Избранное</string>
+    <string name="account_btn_notifications">Уведомления</string>
+    <string name="account_btn_theme">Тема</string>
+    <string name="account_btn_language">Язык</string>
+    <string name="account_btn_support">Поддержка</string>
+    <string name="account_btn_police">Политика использования</string>
+    <string name="account_btn_about">О приложении</string>
+    <string name="account_btn_invite">Пригласить друга</string>
+    <string name="account_btn_logout">Выйти</string>
+    <string name="account_btn_delete_account">Удалить аккаунт</string>
+
+    <string name="account_edit_title">Редактировать данные</string>
+    <string name="account_edit_hint_first_name">Имя</string>
+    <string name="account_edit_hint_last_name">Фамилия</string>
+    <string name="account_edit_hint_phone">Телефон</string>
+    <string name="account_edit_hint_email">Почта</string>
+    <string name="account_edit_hint_birth_date">Дата рождения</string>
+    <string name="account_edit_btn_save">Сохранить</string>
+
+    <string name="chats_title_chats">Чаты</string>
+    <string name="chats_hint_sarch">Поиск</string>
+
+    <string name="news_title_news">Лента</string>
+</resources>

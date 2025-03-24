@@ -8,7 +8,6 @@ import androidx.compose.ui.window.DialogProperties
 import androidx.navigation.NamedNavArgument
 import androidx.navigation.NavDeepLink
 
-@OptIn(ExperimentalAnimationApi::class)
 fun interface NavigationDestination {
     fun route(): String
 

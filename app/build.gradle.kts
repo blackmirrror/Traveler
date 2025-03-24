@@ -39,6 +39,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 }
 
@@ -68,6 +69,10 @@ dependencies {
 
     implementation(libs.compose.material.navigation)
 
+    implementation(libs.google.maps)
+    implementation(libs.google.maps.compose)
+    implementation(libs.google.location)
+
     implementation(project(":bottom-navigation"))
     implementation(project(":navigator"))
     implementation(project(":style"))
@@ -76,4 +81,5 @@ dependencies {
     implementation(project(":feature:news"))
     implementation(project(":feature:chats"))
     implementation(project(":feature:account"))
+    implementation(project(":feature:auth"))
 }

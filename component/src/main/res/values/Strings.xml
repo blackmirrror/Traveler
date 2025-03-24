@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="auth_title_phone">Authorization</string>
+    <string name="auth_title_phone_edit">Changing the phone number</string>
+    <string name="auth_title_email">Email</string>
+    <string name="auth_title_email_edit">Changing your email address</string>
+    <string name="auth_title_code">Enter OTP</string>
+    <string name="auth_des_phone">Enter your phone number and we will send you a confirmation code</string>
+    <string name="auth_des_email">Enter your email and we will send you a confirmation code</string>
+    <string name="auth_des_code_phone">Enter the code sent to the number</string>
+    <string name="auth_des_code_email">Enter the code sent to the email</string>
+    <string name="auth_hint_phone">Phone number</string>
+    <string name="auth_hint_email">Email</string>
+    <string name="auth_btn_send_otp">Send OTP</string>
+    <string name="auth_btn_send_otp_again">Send the code again</string>
+    <string name="auth_des_registration">By registering, you accept the terms of the</string>
+    <string name="auth_des_policy">Privacy Policy</string>
+
+    <string name="account_title_fill_profile">Fill profile data</string>
+    <string name="account_des_fill_profile">To easily exchange messages and share interesting locations!</string>
+    <string name="account_btn_more">More detailed</string>
+    <string name="account_btn_favorite">Favorite</string>
+    <string name="account_btn_notifications">Notifications</string>
+    <string name="account_btn_theme">Theme</string>
+    <string name="account_btn_language">Language</string>
+    <string name="account_btn_support">Support</string>
+    <string name="account_btn_police">Usage Policy</string>
+    <string name="account_btn_about">About the app</string>
+    <string name="account_btn_invite">Invite a friend</string>
+    <string name="account_btn_logout">Logout</string>
+    <string name="account_btn_delete_account">Delete an account</string>
+
+    <string name="account_edit_title">Edit Data</string>
+    <string name="account_edit_hint_first_name">First name</string>
+    <string name="account_edit_hint_last_name">Last name</string>
+    <string name="account_edit_hint_phone">Phone number</string>
+    <string name="account_edit_hint_email">Email</string>
+    <string name="account_edit_hint_birth_date">Birth date</string>
+    <string name="account_edit_btn_save">Save</string>
+
+    <string name="chats_title_chats">Chats</string>
+    <string name="chats_hint_sarch">Search</string>
+
+    <string name="news_title_news">News</string>
+</resources>
