@@ -24,5 +24,4 @@ object AuthEnterOtpDestination : NavigationDestination {
     private const val AUTH_ENTER_OTP_BOTTOM_NAV_ROUTE = "$AUTH_ENTER_OTP_ROUTE/{$DATA_OTP_PARAM}&{$IS_PHONE_OTP_PARAM}"
 
     fun createAuthEnterOtpRoute(data: String, isPhone: Boolean) = "$AUTH_ENTER_OTP_ROUTE/${data.lowercase()}&${isPhone}"
-
 }

@@ -39,6 +39,7 @@ class AccountScreenViewModel @Inject constructor(
             is AccountEvent.DeleteAccount -> deleteAccount()
             is AccountEvent.EditAccount -> editAccount()
             is AccountEvent.ToAuth -> toAuth()
+            is AccountEvent.HideSnackbar -> hideSnackbar()
         }
     }
 
@@ -80,16 +81,19 @@ class AccountScreenViewModel @Inject constructor(
         }
     }
 
-    private fun deleteAccount() {
-//        viewModelScope.launch {
-//            profileRepository.deleteAccount()
-//            authProvider.logout()
-//            _state.value = ProfileState.Loading
-//        }
-    }
+    private fun deleteAccount() {}
 
     private fun editAccount() {
-        navigate(AccountEditDestination.createAccountEditRoute())
+        if (accountRepository.isInternetConnection()) {
+            navigate(AccountEditDestination.createAccountEditRoute())
+        }
+        else {
+            _state.value = ScreenState.Error(
+                data = _state.value.data,
+                error = NoInternet
+            )
+        }
+
     }
 
     private fun toAuth() {
@@ -98,6 +102,12 @@ class AccountScreenViewModel @Inject constructor(
                 data = NULL_DATA_STRING,
                 isPhone = true
             )
+        )
+    }
+
+    private fun hideSnackbar() {
+        _state.value = ScreenState.Success(
+            data = _state.value.data!!
         )
     }
 }

@@ -14,7 +14,7 @@ fun getAccountUserName(firstName: String?, lastName: String?): String {
 }
 
 fun formatPhoneNumber(phoneNumber: String): String {
-    return "+7 (${phoneNumber.substring(0, 3)}) ${phoneNumber.substring(3, 6)}-${phoneNumber.substring(6, 8)}"
+    return "+7 (${phoneNumber.substring(2, 5)}) ${phoneNumber.substring(5, 8)}-${phoneNumber.substring(8, 10)}-${phoneNumber.substring(10, 12)}"
 }
 
 fun Long.toDate(): Date? {

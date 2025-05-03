@@ -6,4 +6,5 @@ sealed class AccountEvent {
     object DeleteAccount : AccountEvent()
     object EditAccount : AccountEvent()
     object ToAuth: AccountEvent()
+    object HideSnackbar: AccountEvent()
 }

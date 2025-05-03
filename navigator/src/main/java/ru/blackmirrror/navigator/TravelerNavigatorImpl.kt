@@ -25,5 +25,4 @@ internal class TravelerNavigatorImpl @Inject constructor() : TravelerNavigator {
     override fun navigateToMain() {
         navigationEvents.trySend(NavigatorEvent.NavigateToMain)
     }
-
 }

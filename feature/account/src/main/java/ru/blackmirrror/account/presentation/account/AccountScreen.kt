@@ -79,9 +79,7 @@ fun Account() {
     }
 
     when (state) {
-        is ScreenState.Loading -> {
-            // todo loading account
-        }
+        is ScreenState.Loading -> {}
         is ScreenState.Success -> AccountContent(
             state = state as ScreenState.Success,
             onIntent = { vm.processEvent(it) }
@@ -102,7 +100,10 @@ fun Account() {
 
     PopupHost(
         message = popupMessage,
-        onDismiss = { popupMessage = null }
+        onDismiss = {
+            popupMessage = null
+            vm.processEvent(AccountEvent.HideSnackbar)
+        }
     )
 }
 
@@ -122,10 +123,12 @@ fun AccountContent(state: ScreenState<User>, onIntent: (AccountEvent) -> Unit) {
             onClick = { onIntent(AccountEvent.EditAccount) }
         )
         Spacer(modifier = Modifier.height(16.dp))
-        SurveySection(
-            onClick = { onIntent(AccountEvent.EditAccount) }
-        )
-        Spacer(modifier = Modifier.height(16.dp))
+        if (state.data != null && showSurveySection(state.data!!)) {
+            SurveySection(
+                onClick = { onIntent(AccountEvent.EditAccount) }
+            )
+            Spacer(modifier = Modifier.height(16.dp))
+        }
         SettingsSection()
         Spacer(modifier = Modifier.height(16.dp))
         ActionButtons(
@@ -353,4 +356,8 @@ fun ActionItem(
         Spacer(modifier = Modifier.width(12.dp))
         Text(text = title, fontSize = 16.sp, color = textColor)
     }
+}
+
+fun showSurveySection(user: User): Boolean {
+    return user.firstName == null || user.email == null
 }

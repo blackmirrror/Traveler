@@ -3,12 +3,12 @@ package ru.blackmirrror.navigator
 import androidx.compose.animation.AnimatedContentScope
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.ui.window.DialogProperties
 import androidx.navigation.NamedNavArgument
 import androidx.navigation.NavDeepLink
 
 fun interface NavigationDestination {
+
     fun route(): String
 
     val arguments: List<NamedNavArgument>

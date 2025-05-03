@@ -21,6 +21,9 @@ offline mode
 animate of keyboard
 photo url to photo path in prefs account
 send code again
+connectivity observer
+account feats
+photo load account
 
 PERFOMANCE
 

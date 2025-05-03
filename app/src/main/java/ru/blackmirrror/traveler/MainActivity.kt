@@ -1,8 +1,6 @@
 package ru.blackmirrror.traveler
 
-
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.core.tween
@@ -26,7 +24,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.plusAssign
 import dagger.hilt.android.AndroidEntryPoint
-import ru.blackmirrror.bottom_navigation.AccountRoute
 import ru.blackmirrror.bottom_navigation.BottomNavigationEntry.Companion.ACCOUNT
 import ru.blackmirrror.bottom_navigation.TravelerBottomNavigation
 import ru.blackmirrror.bottom_navigation.MapRoute
@@ -39,7 +36,6 @@ import ru.blackmirrror.traveler.navigation.addBottomNavigationDestinations
 import ru.blackmirrror.traveler.navigation.addBottomSheetDestinations
 import ru.blackmirrror.traveler.navigation.addComposableDestinations
 import javax.inject.Inject
-
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -59,16 +55,6 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
-
-@Composable
-@Preview(showBackground = true)
-fun Swoe() {
-    MaterialTheme {
-        Map()
-    }
-}
-
-
 
 @Composable
 fun TravelerScaffold(travelerNavigator: TravelerNavigator) {

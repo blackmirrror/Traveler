@@ -11,4 +11,3 @@ class Traveler : Application() {
         FirebaseApp.initializeApp(this)
     }
 }
-

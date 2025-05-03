@@ -14,7 +14,6 @@ import ru.blackmirrror.chats.ChatsScreen
 import ru.blackmirrror.map.ui.Map
 import ru.blackmirrror.news.News
 
-
 private val destinationsBottomNav: Map<BottomNavigationEntry, @Composable (NavHostController) -> Unit> =
     mapOf(
         MapRoute to { Map() },

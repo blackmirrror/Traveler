@@ -22,6 +22,4 @@ class NetworkProviderImpl @Inject constructor(
             activeNetworkInfo != null && activeNetworkInfo.isConnected
         }
     }
-
-
 }

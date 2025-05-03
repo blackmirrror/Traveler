@@ -15,6 +15,6 @@ object AccountEditDestination : NavigationDestination {
 
     private const val ACCOUNT_EDIT_ROUTE = "account_edit"
     private const val ACCOUNT_EDIT_BOTTOM_NAV_ROUTE = ACCOUNT_EDIT_ROUTE
-    fun createAccountEditRoute() = ACCOUNT_EDIT_ROUTE
 
+    fun createAccountEditRoute() = ACCOUNT_EDIT_ROUTE
 }

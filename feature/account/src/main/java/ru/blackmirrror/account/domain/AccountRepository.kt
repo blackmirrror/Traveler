@@ -8,4 +8,5 @@ interface AccountRepository {
 
     fun isAuthenticated(): Boolean
     suspend fun logout(): Result<Unit>
+    fun isInternetConnection(): Boolean
 }
