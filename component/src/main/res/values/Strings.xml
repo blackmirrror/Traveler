@@ -42,4 +42,10 @@
     <string name="chats_hint_sarch">Search</string>
 
     <string name="news_title_news">News</string>
+
+    <string name="component_unauthorized_title">You are not authorized</string>
+    <string name="component_unauthorized_des">Log in to your account to set up a profile and chat</string>
+    <string name="component_unauthorized_btn">Authorize</string>
+
+    <string name="snackbar_no_internet">No internet</string>
 </resources>

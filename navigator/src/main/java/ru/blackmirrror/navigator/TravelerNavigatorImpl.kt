@@ -13,6 +13,7 @@ internal class TravelerNavigatorImpl @Inject constructor() : TravelerNavigator {
     override val destinations = navigationEvents.receiveAsFlow()
 
     override fun navigateUp(): Boolean = navigationEvents.trySend(NavigatorEvent.NavigateUp).isSuccess
+
     override fun popBackStack() {
         navigationEvents.trySend(NavigatorEvent.PopBackStack)
     }
@@ -20,5 +21,9 @@ internal class TravelerNavigatorImpl @Inject constructor() : TravelerNavigator {
     override fun navigate(route: String, builder: NavOptionsBuilder.() -> Unit): Boolean = navigationEvents.trySend(
         NavigatorEvent.Directions(route, builder)
     ).isSuccess
+
+    override fun navigateToMain() {
+        navigationEvents.trySend(NavigatorEvent.NavigateToMain)
+    }
 
 }

@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.ksp)
     alias(libs.plugins.dagger.hilt)
     id("com.autonomousapps.dependency-analysis") version "2.10.1"
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -73,9 +74,14 @@ dependencies {
     implementation(libs.google.maps.compose)
     implementation(libs.google.location)
 
+    implementation(platform("com.google.firebase:firebase-bom:33.11.0"))
+    implementation("com.google.firebase:firebase-analytics")
+    implementation("com.google.firebase:firebase-auth")
+
     implementation(project(":bottom-navigation"))
     implementation(project(":navigator"))
     implementation(project(":style"))
+    implementation(project(":core"))
 
     implementation(project(":feature:map"))
     implementation(project(":feature:news"))

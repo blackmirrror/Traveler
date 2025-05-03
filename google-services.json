@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1052828302073",
+    "project_id": "traveler-997a1",
+    "storage_bucket": "traveler-997a1.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1052828302073:android:fadc93418b2944492e4028",
+        "android_client_info": {
+          "package_name": "ru.blackmirrror.traveler"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD9FbXMHWctLxcC3wN9mmYn2BNe2ceZjjU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

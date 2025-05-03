@@ -163,7 +163,7 @@ fun NewsItem(news: News) {
         }
 
         Image(
-            painter = painterResource(NewsR.drawable.ic_face),
+            painter = painterResource(NewsR.drawable.news),
             contentDescription = "Avatar",
             contentScale = ContentScale.Crop,
             modifier = Modifier
@@ -227,8 +227,8 @@ data class News(
     val long: String,
     val unreadCount: Int,
     val time: String = "12:23",
-    val title: String = "Самое улчшее место всем советую sdf sdf sdf sdf sdf sdf fsd ",
-    val description: String = "Ездили вчера очень понравилось блоа ыдвод алыдвалтж ывулажыуватжыувату тдцуатуаиилуваидуоывиа sdjf lsdnfelsndflj ls dbnljsdfbskd jbdkslsl sk sjdfmkf skdfjs,kd sl sldff, skkd kkdkskkdk kskdk ksdkskdk kkdksk k",
+    val title: String = "Самое лучшее место всем советую",
+    val description: String = "Ездили вчера очень понравилось, обязательно посетите. Все останутся под большим впечатлением. Большой склон, вкусная кафешка при курортном городке"
 )
 
 fun getSampleNews(): List<News> {

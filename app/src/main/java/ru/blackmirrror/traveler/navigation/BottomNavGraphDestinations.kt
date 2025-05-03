@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
-import ru.blackmirrror.account.presentation.ui.Account
+import ru.blackmirrror.account.presentation.account.Account
 import ru.blackmirrror.bottom_navigation.BottomNavigationEntry
 import ru.blackmirrror.bottom_navigation.NewsRoute
 import ru.blackmirrror.bottom_navigation.ChatsRoute

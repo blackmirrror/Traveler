@@ -1,0 +1,34 @@
+REFACTOR
+
+delete ActivityProvider
+hilt to dagger
+right scopes on DI
+LocalContext in @Composable Map(), think about
+delete logs
+delete unused imports
+ctrl alt l everywhere
+delete todo
+delete comment code
+
+FEAT
+
+add/remove fill profile
+@username
+google acc impl on login
+city in account
+app theme in settings impl
+offline mode
+animate of keyboard
+photo url to photo path in prefs account
+send code again
+
+PERFOMANCE
+
+clean unused deps, deps to toml
+delete analytic dep after analytic
+BaseViewModel
+extended ci/cd on PR
+common parts to extension in build.gradle files
+navigator and bottom_nav to one module
+speed up time of build
+baseline profile https://carrion.dev/en/posts/baseline-profiles/

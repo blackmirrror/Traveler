@@ -42,4 +42,10 @@
     <string name="chats_hint_sarch">Поиск</string>
 
     <string name="news_title_news">Лента</string>
+
+    <string name="component_unauthorized_title">Вы не авторизованы</string>
+    <string name="component_unauthorized_des">Войдите в аккаунт, чтобы настраивать профиль и чатиться</string>
+    <string name="component_unauthorized_btn">Авторизация</string>
+
+    <string name="snackbar_no_internet">Нет интернет-соединения</string>
 </resources>

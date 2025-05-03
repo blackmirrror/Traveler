@@ -8,6 +8,7 @@ plugins {
     alias(libs.plugins.ksp) apply false
     alias(libs.plugins.dagger.hilt) apply false
     id("com.autonomousapps.dependency-analysis") version "2.10.1"
+    id("com.google.gms.google-services") version "4.4.2" apply false
 }
 dependencyAnalysis {
     issues {

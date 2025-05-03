@@ -22,13 +22,13 @@ val Typography = Typography(
     ),
 
     labelLarge = TextStyle(
-        fontSize = 32.sp,
+        fontSize = 24.sp,
         fontWeight = FontWeight.Bold,
         textAlign = TextAlign.Center
     ),
 
     labelMedium = TextStyle(
-        fontSize = 16.sp,
+        fontSize = 14.sp,
         textAlign = TextAlign.Center
     ),
 
