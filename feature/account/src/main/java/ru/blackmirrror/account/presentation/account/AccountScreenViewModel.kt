@@ -111,5 +111,3 @@ class AccountScreenViewModel @Inject constructor(
         )
     }
 }
-
-

@@ -1,4 +1,4 @@
-package ru.blackmirrror.chats
+package ru.blackmirrror.chats.presentation.chats
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -18,6 +18,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -33,13 +34,44 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import ru.blackmirrror.component.ui.TextFieldCustom
+import androidx.hilt.navigation.compose.hiltViewModel
+import ru.blackmirrror.chats.domain.Chat
 import ru.blackmirrror.component.R
+import ru.blackmirrror.component.screen.UnauthorizedScreen
+import ru.blackmirrror.component.ui.TextFieldCustom
+import ru.blackmirrror.core.exception.NoAuthorized
+import ru.blackmirrror.core.state.ScreenState
 import ru.blackmirrror.chats.R as ChatsR
 
 @Composable
 fun ChatsScreen() {
-    val chats = rememberSaveable { getSampleChats() }
+
+    val vm: ChatsScreenViewModel = hiltViewModel()
+    val state by vm.state.collectAsState()
+
+    when (state) {
+        is ScreenState.Loading -> {}
+        is ScreenState.Success -> ChatsContent(
+            state = state as ScreenState.Success,
+            onIntent = { vm.processEvent(it) }
+        )
+        is ScreenState.Error -> {
+            val error = (state as ScreenState.Error).error
+            when (error) {
+                is NoAuthorized -> UnauthorizedScreen {
+                    vm.processEvent(ChatsEvent.ToAuth)
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun ChatsContent(
+    state: ScreenState<List<Chat>>,
+    onIntent: (ChatsEvent) -> Unit
+) {
+
     var searchQuery by rememberSaveable { mutableStateOf("") }
 
     Column(modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {
@@ -62,8 +94,8 @@ fun ChatsScreen() {
         Spacer(modifier = Modifier.height(8.dp))
 
         LazyColumn(modifier = Modifier.fillMaxSize()) {
-            items(chats.size) { position ->
-                ChatItem(chats[position])
+            items(state.data?.size ?: 0) { position ->
+                ChatItem(state.data!![position])
             }
         }
     }
@@ -144,21 +176,4 @@ fun ChatItem(chat: Chat) {
             }
         }
     }
-}
-
-data class Chat(
-    val avatar: String,
-    val name: String,
-    val lastMessage: String,
-    val time: String,
-    val unreadCount: Int
-)
-
-fun getSampleChats(): List<Chat> {
-    return listOf(
-        Chat("https://randomuser.me/api/portraits/women/1.jpg", "Анастасия", "Привет! Как дела?", "14:32", 20),
-        Chat("https://randomuser.me/api/portraits/men/2.jpg", "Дмитрий", "Завтра встречаемся в 10?Завтра встречаемся в 10Завтра встречаемся в 10Завтра встречаемся в 10Завтра встречаемся в 10Завтра встречаемся в 10", "13:45", 0),
-        Chat("https://randomuser.me/api/portraits/women/3.jpg", "Мария", "Отлично! Спасибо :)", "12:15", 1),
-        Chat("https://randomuser.me/api/portraits/men/4.jpg", "Алексей", "Понял, спасибо!", "Вчера", 0)
-    )
 }
