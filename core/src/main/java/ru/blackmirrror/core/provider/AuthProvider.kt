@@ -1,10 +1,9 @@
-package ru.blackmirrror.core.api
-
-import ru.blackmirrror.core.model.UserDto
+package ru.blackmirrror.core.provider
 
 interface AuthProvider {
     //fun getAuthToken(): String?
     fun isUserAuthenticated(): Boolean
+    fun getPhoneNumber(): String?
     suspend fun logout(): Result<Unit>
     //fun getCurrentUser(): UserDto?
 }

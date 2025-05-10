@@ -1,20 +1,20 @@
 package ru.blackmirrror.auth.di
 
 import android.content.Context
-import android.content.SharedPreferences
 import com.google.firebase.auth.FirebaseAuth
 import ru.blackmirrror.auth.data.AuthRepositoryImpl
 import ru.blackmirrror.auth.domain.AuthRepository
-import ru.blackmirrror.core.api.AuthProvider
-import dagger.Binds
+import ru.blackmirrror.core.provider.AuthProvider
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import retrofit2.Retrofit
 import ru.blackmirrror.auth.data.AuthSharedPrefs
-import ru.blackmirrror.core.api.ActivityProvider
-import ru.blackmirrror.core.api.NetworkProvider
+import ru.blackmirrror.auth.data.api.AuthApiService
+import ru.blackmirrror.core.di.BackendRetrofit
+import ru.blackmirrror.core.provider.NetworkProvider
 import javax.inject.Singleton
 
 @Module
@@ -35,16 +35,22 @@ object AuthModule {
 
     @Provides
     @Singleton
+    fun provideAuthApiService(@BackendRetrofit retrofit: Retrofit): AuthApiService {
+        return retrofit.create(AuthApiService::class.java)
+    }
+
+    @Provides
+    @Singleton
     fun provideAuthRepository(
-//        activityProvider: ActivityProvider,
         networkProvider: NetworkProvider,
         firebaseAuth: FirebaseAuth,
+        authApiService: AuthApiService,
         authSharedPrefs: AuthSharedPrefs
     ): AuthRepository {
         return AuthRepositoryImpl(
-//            activityProvider,
             networkProvider,
             firebaseAuth,
+            authApiService,
             authSharedPrefs
         )
     }

@@ -14,6 +14,7 @@ import kotlinx.coroutines.launch
 import ru.blackmirrror.auth.domain.AuthRepository
 import ru.blackmirrror.auth.presentation.phoneemail.PhoneEmailUiModel
 import ru.blackmirrror.core.exception.NoInternet
+import ru.blackmirrror.core.state.ResultState
 import ru.blackmirrror.core.state.ScreenState
 import ru.blackmirrror.destinations.AccountEditDestination
 import ru.blackmirrror.destinations.AuthEnterOtpDestination
@@ -53,15 +54,14 @@ class OtpVerificationViewModel @Inject constructor(
 
     private fun verifyOtp(code: String) {
         viewModelScope.launch {
-            val result = authRepository.verifyPhoneOtp(code)
-            if (result.isSuccess) {
-                travelerNavigator.navigateToMain()
-            } else {
-                when (result.exceptionOrNull()) {
-                    is NoInternet -> {
+            authRepository.verifyPhoneOtp(code).collect { result ->
+                when (result) {
+                    is ResultState.Loading -> {}
+                    is ResultState.Success -> travelerNavigator.navigateToMain()
+                    is ResultState.Error -> {
                         _state.value = ScreenState.Error(
                             data = _state.value.data,
-                            error = NoInternet
+                            error = result.error
                         )
                     }
                 }

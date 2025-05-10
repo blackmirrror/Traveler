@@ -23,6 +23,10 @@ google-location = "21.3.0"
 google-maps-compose = "4.4.1"
 material = "1.12.0"
 
+retrofit = "2.11.0"
+retrofit-converter = "2.9.0"
+retrofit-adapters-result = "1.0.10"
+
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose" }
@@ -52,6 +56,10 @@ google-maps = { module = "com.google.android.gms:play-services-maps", version.re
 google-location = { module = "com.google.android.gms:play-services-location", version.ref = "google-location" }
 google-maps-compose = { module = "com.google.maps.android:maps-compose", version.ref = "google-maps-compose" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+
+retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
+retrofit-adapters-result = { module = "com.github.skydoves:retrofit-adapters-result", version.ref = "retrofit-adapters-result" }
+retrofit-converter-json = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit-converter" }
 
 
 [plugins]

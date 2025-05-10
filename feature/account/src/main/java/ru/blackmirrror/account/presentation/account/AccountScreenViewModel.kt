@@ -8,11 +8,11 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import ru.blackmirrror.account.domain.AccountRepository
-import ru.blackmirrror.account.domain.model.NoData
 import ru.blackmirrror.account.domain.model.User
 import ru.blackmirrror.core.NULL_DATA_STRING
 import ru.blackmirrror.core.exception.NoAuthorized
 import ru.blackmirrror.core.exception.NoInternet
+import ru.blackmirrror.core.state.ResultState
 import ru.blackmirrror.core.state.ScreenState
 import ru.blackmirrror.destinations.AccountEditDestination
 import ru.blackmirrror.destinations.AuthPhoneEmailDestination
@@ -49,11 +49,12 @@ class AccountScreenViewModel @Inject constructor(
             return
         }
         viewModelScope.launch {
-            try {
-                val user = accountRepository.getUser()
-                _state.value = ScreenState.Success(user)
-            } catch (e: Exception) {
-                _state.value = ScreenState.Error(NoData)
+            accountRepository.getUser().collect { u ->
+                when (u) {
+                    is ResultState.Loading -> _state.value = ScreenState.Loading(u.data)
+                    is ResultState.Success -> _state.value = ScreenState.Success(u.data)
+                    is ResultState.Error -> _state.value = ScreenState.Error(u.error, u.data)
+                }
             }
         }
     }

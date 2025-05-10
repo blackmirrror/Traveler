@@ -1,12 +1,12 @@
-package ru.blackmirrror.account.domain.model
+package ru.blackmirrror.account.data.api
 
-data class User(
+data class UserDto(
     val id: Long? = null,
     val username: String? = null,
     val email: String? = null,
     val phone: String,
-    var firstName: String? = null,
-    var lastName: String? = null,
+    val firstName: String? = null,
+    val lastName: String? = null,
     val birthDate: Long? = null,
     val photoUrl: String? = null,
     val isOnline: Boolean = false,

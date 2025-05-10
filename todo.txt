@@ -9,6 +9,7 @@ delete unused imports
 ctrl alt l everywhere
 delete todo
 delete comment code
+all providers from :app to :core
 
 FEAT
 
@@ -24,6 +25,11 @@ send code again
 connectivity observer
 account feats
 photo load account
+.setActivity to firebase
+remove and change navigateToMain()
+check birchDate
+email in account impl
+image handling, sle, change package name for news, map and account
 
 PERFOMANCE
 

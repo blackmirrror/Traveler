@@ -5,12 +5,10 @@ import android.content.Context
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ActivityComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
-import dagger.hilt.android.scopes.ActivityScoped
 import dagger.hilt.components.SingletonComponent
-import ru.blackmirrror.core.api.ActivityProvider
-import ru.blackmirrror.core.api.NetworkProvider
+import ru.blackmirrror.core.provider.ActivityProvider
+import ru.blackmirrror.core.provider.NetworkProvider
 import ru.blackmirrror.traveler.network.NetworkProviderImpl
 
 @Module

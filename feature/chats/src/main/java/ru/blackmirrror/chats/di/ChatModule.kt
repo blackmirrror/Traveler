@@ -6,8 +6,8 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import ru.blackmirrror.chats.data.ChatsRepositoryImpl
 import ru.blackmirrror.chats.domain.ChatsRepository
-import ru.blackmirrror.core.api.AuthProvider
-import ru.blackmirrror.core.api.NetworkProvider
+import ru.blackmirrror.core.provider.AuthProvider
+import ru.blackmirrror.core.provider.NetworkProvider
 
 @Module
 @InstallIn(SingletonComponent::class)

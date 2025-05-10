@@ -1,4 +1,4 @@
-package ru.blackmirrror.core.api
+package ru.blackmirrror.core.provider
 
 import android.app.Activity
 

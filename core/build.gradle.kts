@@ -14,6 +14,11 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
+
+        buildConfigField("String", "BACKEND_BASE_URL", "\"${project.property("BACKEND_BASE_URL")}\"")
+        buildConfigField("String", "SUPABASE_BASE_URL", "\"${project.property("SUPABASE_BASE_URL")}\"")
+        buildConfigField("String", "SUPABASE_API_KEY", "\"${project.property("SUPABASE_API_KEY")}\"")
+        buildConfigField("String", "SUPABASE_BUCKET_NAME", "\"${project.property("SUPABASE_BUCKET_NAME")}\"")
     }
 
     buildTypes {
@@ -32,6 +37,9 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
+    buildFeatures {
+        buildConfig = true
+    }
 }
 
 dependencies {
@@ -45,4 +53,8 @@ dependencies {
 
     implementation(libs.hilt.android)
     ksp(libs.hilt.android.compiler)
+
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.converter.json)
+    implementation(libs.retrofit.adapters.result)
 }

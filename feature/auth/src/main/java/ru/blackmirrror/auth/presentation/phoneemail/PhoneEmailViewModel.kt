@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import ru.blackmirrror.auth.domain.AuthRepository
 import ru.blackmirrror.core.exception.NoInternet
+import ru.blackmirrror.core.state.ResultState
 import ru.blackmirrror.core.state.ScreenState
 import ru.blackmirrror.destinations.AuthEnterOtpDestination
 import ru.blackmirrror.destinations.AuthEnterOtpDestination.DATA_OTP_PARAM
@@ -51,22 +52,19 @@ class PhoneEmailViewModel @Inject constructor(
 
     private fun sendOtp(data: String) {
         viewModelScope.launch {
-            val result = authRepository.sendPhoneOtp(data)
-            if (result.isSuccess) {
-                navigate(
-                    AuthEnterOtpDestination.createAuthEnterOtpRoute(
-                        // todo nullable
-                        data = data,
-                        isPhone = _state.value.data?.isPhone!!
+            authRepository.sendPhoneOtp(data).collect { result ->
+                when (result) {
+                    is ResultState.Loading -> {}
+                    is ResultState.Success -> navigate(
+                        AuthEnterOtpDestination.createAuthEnterOtpRoute(
+                            data = data,
+                            isPhone = _state.value.data?.isPhone!!
+                        )
                     )
-                )
-            }
-            else {
-                when (result.exceptionOrNull()) {
-                    is NoInternet -> {
+                    is ResultState.Error -> {
                         _state.value = ScreenState.Error(
                             data = _state.value.data,
-                            error = NoInternet
+                            error = result.error
                         )
                     }
                 }

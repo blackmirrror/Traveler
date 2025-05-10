@@ -2,8 +2,8 @@ package ru.blackmirrror.chats.data
 
 import ru.blackmirrror.chats.domain.Chat
 import ru.blackmirrror.chats.domain.ChatsRepository
-import ru.blackmirrror.core.api.AuthProvider
-import ru.blackmirrror.core.api.NetworkProvider
+import ru.blackmirrror.core.provider.AuthProvider
+import ru.blackmirrror.core.provider.NetworkProvider
 import javax.inject.Inject
 
 class ChatsRepositoryImpl @Inject constructor(

@@ -30,4 +30,8 @@ class AuthSharedPrefs @Inject constructor(
         private const val KEY_PHONE_NUMBER = "phoneNumber"
         private const val KEY_VERIFICATION_ID = "verificationId"
     }
+
+    fun clearAll() {
+        sharedPreferences.edit().clear().apply()
+    }
 }

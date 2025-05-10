@@ -63,6 +63,10 @@ dependencies {
 
     implementation(libs.coil.compose)
 
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.converter.json)
+    implementation(libs.retrofit.adapters.result)
+
     implementation(project(":navigator"))
     implementation(project(":component"))
     implementation(project(":core"))

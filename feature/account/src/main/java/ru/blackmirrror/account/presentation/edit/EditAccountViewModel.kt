@@ -1,5 +1,6 @@
 package ru.blackmirrror.account.presentation.edit
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -8,18 +9,21 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import ru.blackmirrror.account.domain.AccountRepository
-import ru.blackmirrror.account.domain.model.NoData
 import ru.blackmirrror.account.domain.model.User
 import ru.blackmirrror.core.NULL_DATA_STRING
+import ru.blackmirrror.core.image_storage.FileRepository
+import ru.blackmirrror.core.state.ResultState
 import ru.blackmirrror.core.state.ScreenState
 import ru.blackmirrror.destinations.AuthPhoneEmailDestination
 import ru.blackmirrror.navigator.TravelerNavigator
+import java.io.File
 import javax.inject.Inject
 
 @HiltViewModel
 class EditAccountViewModel @Inject constructor(
     private val travelerNavigator: TravelerNavigator,
-    private val accountRepository: AccountRepository
+    private val accountRepository: AccountRepository,
+    private val fileRepository: FileRepository
 ) : ViewModel(), TravelerNavigator by travelerNavigator {
 
     private val _state = MutableStateFlow<ScreenState<User>>(ScreenState.Loading())
@@ -29,24 +33,25 @@ class EditAccountViewModel @Inject constructor(
         processEvent(EditAccountEvent.LoadEdit)
     }
 
-    fun processEvent(intent: EditAccountEvent) {
-        when (intent) {
+    fun processEvent(event: EditAccountEvent) {
+        when (event) {
             is EditAccountEvent.LoadEdit -> loadEditAccount()
             is EditAccountEvent.EditPhone-> editPhone()
             is EditAccountEvent.EditEmail -> editEmail()
-            is EditAccountEvent.EditPhoto -> editPhoto()
-            is EditAccountEvent.SaveUser -> saveUser()
+            is EditAccountEvent.EditPhoto -> editPhoto(event.file)
+            is EditAccountEvent.SaveUser -> saveUser(event.user)
             is EditAccountEvent.Back -> popBackStack()
         }
     }
 
     private fun loadEditAccount() {
         viewModelScope.launch {
-            try {
-                val user = accountRepository.getUser()
-                _state.value = ScreenState.Success(user)
-            } catch (e: Exception) {
-                _state.value = ScreenState.Error(NoData)
+            accountRepository.getUser().collect { user ->
+                when (user) {
+                    is ResultState.Loading -> _state.value = ScreenState.Loading(user.data)
+                    is ResultState.Success -> _state.value = ScreenState.Success(user.data)
+                    is ResultState.Error -> _state.value = ScreenState.Error(user.error, user.data)
+                }
             }
         }
     }
@@ -69,13 +74,41 @@ class EditAccountViewModel @Inject constructor(
         )
     }
 
-    private fun editPhoto() {
-
+    private fun editPhoto(file: File) {
+        uploadImage(file)
     }
 
-    private fun saveUser() {
+    private fun saveUser(user: User) {
         viewModelScope.launch {
-            accountRepository.updateUser()
+            accountRepository.updateUser(user).collect { res ->
+                when (res) {
+                    is ResultState.Success -> {
+                        navigateToMain()
+                    }
+                    is ResultState.Loading -> {}
+                    is ResultState.Error -> {}
+                }
+            }
+        }
+    }
+
+    private fun uploadImage(file: File) {
+        viewModelScope.launch {
+            fileRepository.uploadImage(file).collect { result ->
+                when (result) {
+                    is ResultState.Loading -> {
+                        Log.d("DDD", "uploadImage: l ${result.data}")
+                    }
+                    is ResultState.Success -> {
+                        val imageUrl = fileRepository.getImageUrl(file.name)
+                        saveUser(_state.value.data!!.copy(photoUrl = imageUrl))
+                        Log.d("DDD", "uploadImage: s ${result.data}")
+                    }
+                    is ResultState.Error -> {
+                        Log.d("DDD", "uploadImage: e ${result.error}")
+                    }
+                }
+            }
         }
     }
 }

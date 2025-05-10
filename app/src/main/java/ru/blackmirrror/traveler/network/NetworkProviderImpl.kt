@@ -4,7 +4,7 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
-import ru.blackmirrror.core.api.NetworkProvider
+import ru.blackmirrror.core.provider.NetworkProvider
 import javax.inject.Inject
 
 class NetworkProviderImpl @Inject constructor(

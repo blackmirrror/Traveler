@@ -1,8 +1,7 @@
 package ru.blackmirrror.auth.di
 
 import ru.blackmirrror.auth.domain.AuthRepository
-import ru.blackmirrror.core.api.AuthProvider
-import ru.blackmirrror.core.model.UserDto
+import ru.blackmirrror.core.provider.AuthProvider
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -13,6 +12,10 @@ class AuthProviderImpl @Inject constructor(
 
     override fun isUserAuthenticated(): Boolean {
         return authRepository.isAuthenticated()
+    }
+
+    override fun getPhoneNumber(): String? {
+        return authRepository.getPhoneNumber()
     }
 
     override suspend fun logout(): Result<Unit> {

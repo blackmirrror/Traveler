@@ -1,5 +1,9 @@
 package ru.blackmirrror.account.presentation.edit
 
+import android.content.Context
+import android.net.Uri
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -24,6 +28,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -32,29 +37,47 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import ru.blackmirrror.account.domain.model.User
+import ru.blackmirrror.account.presentation.dateStringToLong
+import ru.blackmirrror.account.presentation.longToDateString
 import ru.blackmirrror.component.R
 import ru.blackmirrror.component.ui.TextFieldCustom
 import ru.blackmirrror.component.ui.TextFieldWithEdit
 import ru.blackmirrror.component.ui.TextFieldWithMask
 import ru.blackmirrror.destinations.AuthPhoneEmailDestination
+import java.io.File
 import ru.blackmirrror.account.R as AccountR
 
 @Composable
 fun EditAccountScreen() {
 
     val vm: EditAccountViewModel = hiltViewModel()
+    val state by vm.state.collectAsState()
 
-    var firstName by rememberSaveable { mutableStateOf("Анастасия") }
-    var lastName by rememberSaveable { mutableStateOf("Иванова") }
-    var phoneNumber by rememberSaveable { mutableStateOf("+7 (900) 999-99-99") }
-    var email by rememberSaveable { mutableStateOf("anastasiaivanova@mail.ru") }
-    var birthDate by rememberSaveable { mutableStateOf("") }
+    var firstName by rememberSaveable { mutableStateOf(state.data?.firstName ?: "") }
+    var lastName by rememberSaveable { mutableStateOf(state.data?.lastName ?: "") }
+    var phoneNumber by rememberSaveable { mutableStateOf(state.data?.phone ?: "") }
+    var email by rememberSaveable { mutableStateOf(state.data?.email ?: "") }
+    var birthDate by rememberSaveable { mutableStateOf(longToDateString(state.data?.birthDate)) }
+
+    val context = LocalContext.current
+    val launcher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.GetContent()
+    ) { uri: Uri? ->
+        uri?.let {
+            val file = uriToFile(context, it)
+            if (file != null) {
+                vm.processEvent(EditAccountEvent.EditPhoto(file))
+            }
+        }
+    }
 
     Column(
         modifier = Modifier
@@ -102,7 +125,7 @@ fun EditAccountScreen() {
                     .border(2.dp, MaterialTheme.colorScheme.onPrimaryContainer, CircleShape)
             )
             IconButton(
-                onClick = { /* Change photo logic */ },
+                onClick = { launcher.launch("image/*") },
                 modifier = Modifier
                     .size(32.dp)
                     .background(MaterialTheme.colorScheme.onPrimaryContainer, CircleShape)
@@ -143,7 +166,7 @@ fun EditAccountScreen() {
             onEditClick = {
                 vm.navigate(
                     AuthPhoneEmailDestination.createAuthEnterOtpRoute(
-                        data = "79536443782",
+                        data = phoneNumber,
                         isPhone = true
                     )
                 )
@@ -179,7 +202,15 @@ fun EditAccountScreen() {
         Spacer(modifier = Modifier.height(24.dp))
 
         Button(
-            onClick = { vm.popBackStack() },
+            onClick = {
+                vm.processEvent(EditAccountEvent.SaveUser(
+                User(
+                    phone = "",
+                    firstName = firstName,
+                    lastName = lastName,
+                    birthDate = dateStringToLong(birthDate)
+                )
+            )) },
             modifier = Modifier.fillMaxWidth()
         ) {
             Text(
@@ -190,3 +221,13 @@ fun EditAccountScreen() {
         }
     }
 }
+
+fun uriToFile(context: Context, uri: Uri): File? {
+    val inputStream = context.contentResolver.openInputStream(uri) ?: return null
+    val tempFile = File.createTempFile("temp_image", ".jpg", context.cacheDir)
+    tempFile.outputStream().use { output ->
+        inputStream.copyTo(output)
+    }
+    return tempFile
+}
+

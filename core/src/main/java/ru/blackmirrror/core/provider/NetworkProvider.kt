@@ -1,4 +1,4 @@
-package ru.blackmirrror.core.api
+package ru.blackmirrror.core.provider
 
 interface NetworkProvider {
     fun isInternetConnection(): Boolean
