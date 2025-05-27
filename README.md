@@ -8,3 +8,9 @@
 - Редактируемый профиль
 - Темная и светлая тема
 - Русский и английский языки
+
+![collage (7)](https://github.com/user-attachments/assets/a74265be-72c6-48d6-931d-a5cd627f26b2)
+
+![collage (8)](https://github.com/user-attachments/assets/1b3fd3ca-d583-47e1-828c-4f17ab027b33)
+
+![collage (9)](https://github.com/user-attachments/assets/ec9d4d96-8e58-418d-beea-7b18eafc943b)
