@@ -2,6 +2,7 @@ package ru.blackmirrror.chats.presentation.chats
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -35,6 +36,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import coil.compose.AsyncImage
 import ru.blackmirrror.chats.domain.Chat
 import ru.blackmirrror.component.R
 import ru.blackmirrror.component.screen.UnauthorizedScreen
@@ -110,13 +112,22 @@ fun ChatItem(chat: Chat) {
             .padding(horizontal = 16.dp, vertical = 8.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Image(
-            painter = painterResource(id = ChatsR.drawable.ic_face),
+//        Image(
+//            painter = painterResource(id = ChatsR.drawable.ic_face),
+//            contentDescription = "Avatar",
+//            contentScale = ContentScale.Crop,
+//            modifier = Modifier
+//                .size(50.dp)
+//                .clip(CircleShape)
+//        )
+        AsyncImage(
+            model = chat.avatar,
             contentDescription = "Avatar",
-            contentScale = ContentScale.Crop,
             modifier = Modifier
                 .size(50.dp)
-                .clip(CircleShape)
+                .clip(CircleShape),
+//                .border(2.dp, MaterialTheme.colorScheme.onPrimaryContainer, CircleShape),
+            contentScale = ContentScale.Crop
         )
 
         Spacer(modifier = Modifier.width(12.dp))

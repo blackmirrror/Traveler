@@ -1,4 +1,4 @@
-package ru.blackmirrror.map.ui
+package ru.blackmirrror.destinations
 
 import ru.blackmirrror.navigator.NavigationDestination
 

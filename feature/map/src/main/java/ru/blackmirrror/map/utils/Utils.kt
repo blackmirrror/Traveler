@@ -9,6 +9,7 @@ import android.util.Log
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.model.LatLng
+import ru.blackmirrror.map.domain.model.Mark
 
 fun checkForPermission(context: Context): Boolean {
     return !(ActivityCompat.checkSelfPermission(
@@ -38,4 +39,18 @@ fun getCurrentLocation(context: Context, onLocationFetched: (location: LatLng) -
             Log.d("MAP-EXCEPTION",exception.message.toString())
         }
 
+}
+
+fun List<Mark>?.toListLatLng(): List<LatLng>? {
+    if (this != null)
+        return this.mapNotNull { it.toLatLng() }
+    return null
+}
+
+fun Mark?.toLatLng(): LatLng? {
+    if (this != null) {
+        if (this.latitude != null && this.longitude != null)
+            return LatLng(this.latitude, this.longitude)
+    }
+    return null
 }

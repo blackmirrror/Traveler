@@ -11,13 +11,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.navigation.ModalBottomSheetLayout
 //noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.navigation.rememberBottomSheetNavigator
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.view.WindowCompat
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.NavHost
@@ -27,7 +25,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import ru.blackmirrror.bottom_navigation.BottomNavigationEntry.Companion.ACCOUNT
 import ru.blackmirrror.bottom_navigation.TravelerBottomNavigation
 import ru.blackmirrror.bottom_navigation.MapRoute
-import ru.blackmirrror.map.ui.Map
 import ru.blackmirrror.navigator.TravelerNavigator
 import ru.blackmirrror.navigator.NavigatorEvent
 import ru.blackmirrror.style.shape.BottomSheetShapes

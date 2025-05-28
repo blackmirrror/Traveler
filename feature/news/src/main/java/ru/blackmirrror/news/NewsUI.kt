@@ -2,7 +2,9 @@ package ru.blackmirrror.news
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import coil.compose.AsyncImage
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -106,13 +108,22 @@ fun NewsItem(news: News) {
                 .padding(start = 16.dp, top = 8.dp, bottom = 4.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Image(
-                painter = painterResource(id = NewsR.drawable.ic_face),
+//            Image(
+//                painter = news.avatar,
+//                contentDescription = "Avatar",
+//                contentScale = ContentScale.Crop,
+//                modifier = Modifier
+//                    .size(40.dp)
+//                    .clip(CircleShape)
+//            )
+            AsyncImage(
+                model = news.avatar,
                 contentDescription = "Avatar",
-                contentScale = ContentScale.Crop,
                 modifier = Modifier
                     .size(40.dp)
-                    .clip(CircleShape)
+                    .clip(CircleShape),
+//                    .border(2.dp, MaterialTheme.colorScheme.onPrimaryContainer, CircleShape),
+                contentScale = ContentScale.Crop
             )
 
             Spacer(modifier = Modifier.width(8.dp))
@@ -163,7 +174,7 @@ fun NewsItem(news: News) {
         }
 
         Image(
-            painter = painterResource(NewsR.drawable.news),
+            painter = if (news.time == "12:23") painterResource(NewsR.drawable.i) else painterResource(NewsR.drawable.novosib),
             contentDescription = "Avatar",
             contentScale = ContentScale.Crop,
             modifier = Modifier
@@ -234,18 +245,24 @@ data class News(
 fun getSampleNews(): List<News> {
     return listOf(
         News(
-            "https://randomuser.me/api/portraits/women/1.jpg",
-            "Анастасия Фролова",
-            "45.2343434",
-            "45.2343434",
-            20
+            "https://randomuser.me/api/portraits/men/67.jpg",
+            "Max Vargin",
+            "44.9243434",
+            "42.062257",
+            20,
+            time = "12:23",
+            title = "Гора бударка",
+            description = "Много подъездов, надо осторожнее выбирать в плохую погоду. Чуть не застряли. А место очень красивое"
         ),
         News(
-            "https://randomuser.me/api/portraits/men/2.jpg",
-            "Дмитрий Маслов",
+            "https://randomuser.me/api/portraits/women/11.jpg",
+            "Bulka bulochka",
             "45.2343434",
             "45.2343434",
-            0
+            0,
+            time = "Вчера",
+            title = "Новосибирское водохранилище",
+            description = "Шикарное место"
         ),
         News(
             "https://randomuser.me/api/portraits/women/3.jpg",

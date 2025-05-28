@@ -42,6 +42,12 @@
     <string name="chats_hint_sarch">Search</string>
 
     <string name="news_title_news">News</string>
+    
+    <string name="map_filters_the_types_of_places">The types of places</string>
+    <string name="map_filters_search_radius">Search radius</string>
+    <string name="map_filters_minimum_rating">Minimum rating</string>
+    <string name="map_filters_km">km</string>
+    <string name="map_filters_btn_apply">Apply filters</string>
 
     <string name="component_unauthorized_title">You are not authorized</string>
     <string name="component_unauthorized_des">Log in to your account to set up a profile and chat</string>

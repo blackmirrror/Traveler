@@ -6,13 +6,13 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
-import ru.blackmirrror.map.ui.SearchFilterDestination
-import ru.blackmirrror.map.ui.SearchFilterUI
+import ru.blackmirrror.destinations.SearchFilterDestination
+import ru.blackmirrror.map.presentation.SearchFilterScreen
 import ru.blackmirrror.navigator.NavigationDestination
 
 private val bottomSheetDestinations: Map<NavigationDestination, @Composable (NavBackStackEntry, NavHostController) -> Unit>
     get() = mapOf(
-        SearchFilterDestination to { _, _ -> SearchFilterUI() }
+        SearchFilterDestination to { _, _ -> SearchFilterScreen() }
     )
 
 fun NavGraphBuilder.addBottomSheetDestinations(navController: NavHostController) {

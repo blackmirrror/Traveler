@@ -1,4 +1,4 @@
-package ru.blackmirrror.map.ui
+package ru.blackmirrror.map.presentation
 
 import android.Manifest
 import androidx.activity.compose.rememberLauncherForActivityResult

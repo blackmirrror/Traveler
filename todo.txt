@@ -26,10 +26,16 @@ connectivity observer
 account feats
 photo load account
 .setActivity to firebase
-remove and change navigateToMain()
+remove and change navigateToMain() (lifecycleOwner.on_resume at account must to load getUser again)
 check birchDate
 email in account impl
 image handling, sle, change package name for news, map and account
+location permission screen edit
+pagination for all
+
+BUG
+
+
 
 PERFOMANCE
 

@@ -62,20 +62,10 @@ fun TravelerBottomNavigation(
                         launchSingleTop = true
                     }
                 },
-//                label = {
-//                    Text(
-//                        modifier = Modifier.wrapContentSize(unbounded = true),
-//                        softWrap = false,
-//                        maxLines = 1,
-//                        textAlign = TextAlign.Center,
-//                        text = stringResource(id = bottomEntry.screen.resourceID)
-//                    )
-//                },
                 icon = {
                     Icon(
                         imageVector = bottomEntry.icon,
-                        contentDescription = null,
-                        //contentDescription = stringResource(id = bottomEntry.screen.resourceID)
+                        contentDescription = null
                     )
                 },
                 colors = NavigationBarItemDefaults.colors(

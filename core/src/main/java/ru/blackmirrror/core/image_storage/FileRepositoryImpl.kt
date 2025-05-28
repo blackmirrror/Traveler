@@ -26,7 +26,6 @@ class FileRepositoryImpl @Inject constructor(
             emit(ResultState.Error(ServerError))
         }
     }.catch { e ->
-        e.printStackTrace()
         emit(ResultState.Error(NoInternet))
     }
 

@@ -65,6 +65,11 @@ dependencies {
     implementation(libs.google.maps.compose)
     implementation(libs.google.location)
 
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.converter.json)
+    implementation(libs.retrofit.adapters.result)
+
     implementation(project(":component"))
+    implementation(project(":core"))
     implementation(project(":navigator"))
 }

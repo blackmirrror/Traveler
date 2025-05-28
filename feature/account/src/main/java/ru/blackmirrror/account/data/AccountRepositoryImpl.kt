@@ -81,6 +81,7 @@ internal class AccountRepositoryImpl @Inject constructor(
                 } else {
                     emit(ResultState.Error(NoInternet, accountSharedPrefs.getUserFromPrefs()))
                 }
+                getUser()
             }
         }
     }

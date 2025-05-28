@@ -14,31 +14,38 @@ class ChatsRepositoryImpl @Inject constructor(
     override fun getChats(): List<Chat> {
         return listOf(
             Chat(
-                "https://randomuser.me/api/portraits/women/1.jpg",
+                "https://randomuser.me/api/portraits/women/17.jpg",
                 "Анастасия",
-                "Привет! Как дела?",
+                "Можно еще туда съездить в след раз",
                 "14:32",
-                20
+                3
             ),
             Chat(
-                "https://randomuser.me/api/portraits/men/2.jpg",
-                "Дмитрий",
-                "Завтра встречаемся в 10?Завтра встречаемся в 10Завтра встречаемся в 10Завтра встречаемся в 10Завтра встречаемся в 10Завтра встречаемся в 10",
+                "https://randomuser.me/api/portraits/men/44.jpg",
+                "Dima",
+                "Завтра встречаемся в 10? Женя сказал можно пораньше в 10Завтра встречаемся в 10Завтра встречаемся в 10Завтра встречаемся в 10",
                 "13:45",
-                0
-            ),
-            Chat(
-                "https://randomuser.me/api/portraits/women/3.jpg",
-                "Мария",
-                "Отлично! Спасибо :)",
-                "12:15",
                 1
             ),
             Chat(
-                "https://randomuser.me/api/portraits/men/4.jpg",
+                "https://randomuser.me/api/portraits/lego/6.jpg",
+                "Penguin",
+                "Это на границе с Грузией",
+                "Вчера",
+                0
+            ),
+            Chat(
+                "https://randomuser.me/api/portraits/men/23.jpg",
                 "Алексей",
                 "Понял, спасибо!",
-                "Вчера",
+                "15.03.25",
+                0
+            ),
+            Chat(
+                "https://randomuser.me/api/portraits/men/2.jpg",
+                "Misha",
+                "Только если после 18, работа",
+                "12.03.25",
                 0
             )
         )
