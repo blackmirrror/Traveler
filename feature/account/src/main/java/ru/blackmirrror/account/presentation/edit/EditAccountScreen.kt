@@ -48,9 +48,10 @@ import ru.blackmirrror.account.domain.model.User
 import ru.blackmirrror.account.presentation.dateStringToLong
 import ru.blackmirrror.account.presentation.longToDateString
 import ru.blackmirrror.component.R
-import ru.blackmirrror.component.ui.TextFieldCustom
+import ru.blackmirrror.component.ui.TextFieldOneLine
 import ru.blackmirrror.component.ui.TextFieldWithEdit
 import ru.blackmirrror.component.ui.TextFieldWithMask
+import ru.blackmirrror.core.uriToFile
 import ru.blackmirrror.destinations.AuthPhoneEmailDestination
 import java.io.File
 import ru.blackmirrror.account.R as AccountR
@@ -116,7 +117,7 @@ fun EditAccountScreen() {
             modifier = Modifier.size(120.dp)
         ) {
             Image(
-                painter = painterResource(id = AccountR.drawable.ic_face),
+                painter = painterResource(id = AccountR.drawable.cat),
                 contentDescription = "Profile Picture",
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
@@ -141,7 +142,7 @@ fun EditAccountScreen() {
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        TextFieldCustom(
+        TextFieldOneLine(
             value = firstName,
             onValueChange = { firstName = it },
             label = stringResource(R.string.account_edit_hint_first_name),
@@ -150,7 +151,7 @@ fun EditAccountScreen() {
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        TextFieldCustom(
+        TextFieldOneLine(
             value = lastName,
             onValueChange = { lastName = it },
             label = stringResource(R.string.account_edit_hint_last_name),
@@ -220,14 +221,5 @@ fun EditAccountScreen() {
             )
         }
     }
-}
-
-fun uriToFile(context: Context, uri: Uri): File? {
-    val inputStream = context.contentResolver.openInputStream(uri) ?: return null
-    val tempFile = File.createTempFile("temp_image", ".jpg", context.cacheDir)
-    tempFile.outputStream().use { output ->
-        inputStream.copyTo(output)
-    }
-    return tempFile
 }
 

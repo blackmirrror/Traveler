@@ -10,10 +10,13 @@ import kotlinx.coroutines.launch
 import ru.blackmirrror.chats.domain.Chat
 import ru.blackmirrror.chats.domain.ChatsRepository
 import ru.blackmirrror.core.NULL_DATA_STRING
+import ru.blackmirrror.core.api.UserDto
 import ru.blackmirrror.core.exception.NoAuthorized
 import ru.blackmirrror.core.exception.NoData
 import ru.blackmirrror.core.state.ScreenState
 import ru.blackmirrror.destinations.AuthPhoneEmailDestination
+import ru.blackmirrror.destinations.ChatDestination
+import ru.blackmirrror.navigator.NavigatorResult
 import ru.blackmirrror.navigator.TravelerNavigator
 import javax.inject.Inject
 
@@ -27,7 +30,21 @@ class ChatsScreenViewModel @Inject constructor(
     val state: StateFlow<ScreenState<List<Chat>>> = _state.asStateFlow()
 
     init {
+        observeNavigationResults()
         processEvent(ChatsEvent.LoadChats)
+    }
+
+    private fun observeNavigationResults() {
+        viewModelScope.launch {
+            results.collect { result ->
+                when (result) {
+                    is NavigatorResult.UpdMess -> {
+                        _state.value.data!!.get(0).unreadCount = 0
+                    }
+                    else -> Unit
+                }
+            }
+        }
     }
 
     fun processEvent(intent: ChatsEvent) {
@@ -55,26 +72,7 @@ class ChatsScreenViewModel @Inject constructor(
     }
 
     private fun toChat() {
-//        viewModelScope.launch {
-//            val result = chatsRepository.logout()
-//            if (result.isSuccess) {
-//                AuthPhoneEmailDestination.createAuthEnterOtpRoute(
-//                    data = NULL_DATA_STRING,
-//                    isPhone = true
-//                )
-//                _state.value = ScreenState.Error(NoAuthorized)
-//            }
-//            else {
-//                when (result.exceptionOrNull()) {
-//                    is NoInternet -> {
-//                        _state.value = ScreenState.Error(
-//                            data = _state.value.data,
-//                            error = NoInternet
-//                        )
-//                    }
-//                }
-//            }
-//        }
+        navigate(ChatDestination.createAccountEditRoute())
     }
 
     private fun toAuth() {

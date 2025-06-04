@@ -1,8 +1,5 @@
 package ru.blackmirrror.auth.presentation.otp
 
-import android.app.Application
-import android.util.Log
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -12,12 +9,8 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import ru.blackmirrror.auth.domain.AuthRepository
-import ru.blackmirrror.auth.presentation.phoneemail.PhoneEmailUiModel
-import ru.blackmirrror.core.exception.NoInternet
 import ru.blackmirrror.core.state.ResultState
 import ru.blackmirrror.core.state.ScreenState
-import ru.blackmirrror.destinations.AccountEditDestination
-import ru.blackmirrror.destinations.AuthEnterOtpDestination
 import ru.blackmirrror.destinations.AuthEnterOtpDestination.DATA_OTP_PARAM
 import ru.blackmirrror.destinations.AuthEnterOtpDestination.IS_PHONE_OTP_PARAM
 import ru.blackmirrror.navigator.TravelerNavigator

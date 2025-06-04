@@ -152,13 +152,13 @@ fun CitySection() {
         Spacer(modifier = Modifier.width(8.dp))
         Column {
             Text(
-                text = "Санкт-Петербург",
+                text = "Москва",
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.onBackground
             )
             Text(
-                text = "12 Марта, 2025",
+                text = "31 Мая, 2025",
                 fontSize = 14.sp,
                 color = MaterialTheme.colorScheme.onPrimaryContainer
             )

@@ -11,7 +11,7 @@ import ru.blackmirrror.bottom_navigation.ChatsRoute
 import ru.blackmirrror.bottom_navigation.MapRoute
 import ru.blackmirrror.bottom_navigation.AccountRoute
 import ru.blackmirrror.chats.presentation.chats.ChatsScreen
-import ru.blackmirrror.map.presentation.Map
+import ru.blackmirrror.map.presentation.map.Map
 import ru.blackmirrror.news.News
 
 private val destinationsBottomNav: Map<BottomNavigationEntry, @Composable (NavHostController) -> Unit> =

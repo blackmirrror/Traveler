@@ -26,6 +26,7 @@ class FileRepositoryImpl @Inject constructor(
             emit(ResultState.Error(ServerError))
         }
     }.catch { e ->
+        Log.d("DDD", "uploadImage: ${e.message}")
         emit(ResultState.Error(NoInternet))
     }
 

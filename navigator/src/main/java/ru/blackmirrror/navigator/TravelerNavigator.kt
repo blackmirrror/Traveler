@@ -6,6 +6,9 @@ import kotlinx.coroutines.flow.Flow
 interface TravelerNavigator {
 
     val destinations: Flow<NavigatorEvent>
+    val results: Flow<NavigatorResult>
+
+    fun sendResult(result: NavigatorResult)
 
     fun navigateUp(): Boolean
 

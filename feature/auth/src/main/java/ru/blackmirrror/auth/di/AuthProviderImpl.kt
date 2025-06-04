@@ -22,6 +22,10 @@ class AuthProviderImpl @Inject constructor(
         return authRepository.logout()
     }
 
+    override fun getUserId(): Long {
+        return 4
+    }
+
 //    override fun getCurrentUser(): UserDto? {
 //        authRepository.getCu
 //    }

@@ -39,15 +39,24 @@
     <string name="account_edit_btn_save">Сохранить</string>
 
     <string name="chats_title_chats">Чаты</string>
-    <string name="chats_hint_sarch">Поиск</string>
+    <string name="chats_hint_search">Поиск</string>
+    <string name="chats_hint_message">Сообщение...</string>
 
     <string name="news_title_news">Лента</string>
 
-    <string name="map_filters_the_types_of_places">Типы мест</string>
+    <string name="map_filters_title">Фильтры</string>
+    <string name="map_filters_the_categories_of_places">Категории мест</string>
     <string name="map_filters_search_radius">Радиус поиска</string>
     <string name="map_filters_minimum_rating">Минимальный рейтинг</string>
     <string name="map_filters_km">км</string>
     <string name="map_filters_btn_apply">Применить фильтры</string>
+
+    <string name="map_create_mark_new">Новая метка</string>
+    <string name="map_create_mark_title">Название</string>
+    <string name="map_create_mark_description">Описание</string>
+    <string name="map_create_mark_the_categories_of_place">Категории</string>
+    <string name="map_create_mark_rating">Рейтинг</string>
+    <string name="map_create_mark_btn_save">Сохранить</string>
 
     <string name="component_unauthorized_title">Вы не авторизованы</string>
     <string name="component_unauthorized_des">Войдите в аккаунт, чтобы настраивать профиль и чатиться</string>

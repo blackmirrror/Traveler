@@ -6,3 +6,4 @@ data object NoData: Exception()
 
 data object ServerError: Exception()
 data object EmptyData: Exception()
+data object ImageNotUploaded: Exception()

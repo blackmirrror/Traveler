@@ -6,6 +6,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import ru.blackmirrror.core.di.BackendRetrofit
+import ru.blackmirrror.core.image_storage.FileRepository
 import ru.blackmirrror.core.provider.AuthProvider
 import ru.blackmirrror.core.provider.NetworkProvider
 import ru.blackmirrror.map.data.MapApiService
@@ -27,12 +28,14 @@ class MapModule {
     fun provideMapRepository(
         authProvider: AuthProvider,
         networkProvider: NetworkProvider,
-        apiService: MapApiService
+        apiService: MapApiService,
+        fileRepository: FileRepository
     ): MapRepository {
         return MapRepositoryImpl(
             authProvider = authProvider,
             networkProvider = networkProvider,
-            apiService = apiService
+            apiService = apiService,
+            fileRepository = fileRepository
         )
     }
 }

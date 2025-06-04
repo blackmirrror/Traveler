@@ -9,6 +9,8 @@ data class UserDto(
     val lastName: String? = null,
     val birthDate: Long? = null,
     val photoUrl: String? = null,
-    val isOnline: Boolean = false,
-    val lastSeen: Long? = null
+    val online: Boolean = false,
+    val lastSeen: Long? = null,
+    val markCount: Int = 0,
+    val postCount: Int = 0
 )

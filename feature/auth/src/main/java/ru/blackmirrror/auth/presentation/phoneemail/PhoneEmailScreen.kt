@@ -28,7 +28,7 @@ import ru.blackmirrror.auth.presentation.getPhoneEmailDes
 import ru.blackmirrror.auth.presentation.getPhoneEmailTitle
 import ru.blackmirrror.component.R
 import ru.blackmirrror.component.ui.PopupHost
-import ru.blackmirrror.component.ui.TextFieldCustom
+import ru.blackmirrror.component.ui.TextFieldOneLine
 import ru.blackmirrror.component.ui.TextFieldWithMask
 import ru.blackmirrror.core.NULL_DATA_STRING
 import ru.blackmirrror.core.exception.NoInternet
@@ -103,7 +103,7 @@ fun PhoneEmailContent(state: ScreenState<PhoneEmailUiModel>, onIntent: (PhoneEma
                 onDataChanged = { data = it }
             )
         } else {
-            TextFieldCustom(
+            TextFieldOneLine(
                 value = data,
                 onValueChange = { data = it },
                 label = stringResource(R.string.auth_hint_email)

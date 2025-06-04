@@ -1,8 +1,6 @@
 package ru.blackmirrror.chats.presentation.chats
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -28,7 +26,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -40,10 +37,9 @@ import coil.compose.AsyncImage
 import ru.blackmirrror.chats.domain.Chat
 import ru.blackmirrror.component.R
 import ru.blackmirrror.component.screen.UnauthorizedScreen
-import ru.blackmirrror.component.ui.TextFieldCustom
+import ru.blackmirrror.component.ui.TextFieldOneLine
 import ru.blackmirrror.core.exception.NoAuthorized
 import ru.blackmirrror.core.state.ScreenState
-import ru.blackmirrror.chats.R as ChatsR
 
 @Composable
 fun ChatsScreen() {
@@ -85,10 +81,10 @@ fun ChatsContent(
             modifier = Modifier.padding(16.dp),
             color = MaterialTheme.colorScheme.onBackground
         )
-        TextFieldCustom(
+        TextFieldOneLine(
             value = searchQuery,
             onValueChange = { searchQuery = it },
-            label = stringResource(R.string.chats_hint_sarch),
+            label = stringResource(R.string.chats_hint_search),
             isSearch = true,
             modifier = Modifier.padding(horizontal = 16.dp)
         )
@@ -97,18 +93,24 @@ fun ChatsContent(
 
         LazyColumn(modifier = Modifier.fillMaxSize()) {
             items(state.data?.size ?: 0) { position ->
-                ChatItem(state.data!![position])
+                ChatItem(
+                    state.data!![position],
+                    onIntent
+                )
             }
         }
     }
 }
 
 @Composable
-fun ChatItem(chat: Chat) {
+fun ChatItem(
+    chat: Chat,
+    onIntent: (ChatsEvent) -> Unit
+) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable { /* Открытие чата */ }
+            .clickable { onIntent(ChatsEvent.ToChat) }
             .padding(horizontal = 16.dp, vertical = 8.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
