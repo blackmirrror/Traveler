@@ -12,12 +12,12 @@ import ru.blackmirrror.bottom_navigation.MapRoute
 import ru.blackmirrror.bottom_navigation.AccountRoute
 import ru.blackmirrror.chats.presentation.chats.ChatsScreen
 import ru.blackmirrror.map.presentation.map.Map
-import ru.blackmirrror.news.News
+import ru.blackmirrror.presentation.PostScreen
 
 private val destinationsBottomNav: Map<BottomNavigationEntry, @Composable (NavHostController) -> Unit> =
     mapOf(
         MapRoute to { Map() },
-        NewsRoute to { News() },
+        NewsRoute to { PostScreen() },
         ChatsRoute to { ChatsScreen() },
         AccountRoute to { Account() },
     )

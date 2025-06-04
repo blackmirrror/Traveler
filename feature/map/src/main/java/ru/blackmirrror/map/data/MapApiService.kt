@@ -8,14 +8,8 @@ import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Path
 import retrofit2.http.Query
-import ru.blackmirrror.map.domain.Category
 
 interface MapApiService {
-
-    @GET("/marks")
-    fun getAllMarks(
-
-    ): Response<List<MarkDto>>
 
     @GET("/marks")
     suspend fun getAllMarks(

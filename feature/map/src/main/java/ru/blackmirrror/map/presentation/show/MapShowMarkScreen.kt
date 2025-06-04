@@ -27,6 +27,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import coil.compose.AsyncImage
 import ru.blackmirrror.core.api.UserDto
 import ru.blackmirrror.core.state.ScreenState
 import ru.blackmirrror.map.data.MarkDto
@@ -82,7 +83,7 @@ fun MapShowMarkContent(
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        ImagePickerCard { }
+        state.data?.imageUrl?.let { ImagePickerCard(imageUrl = it) { } }
         Spacer(modifier = Modifier.height(8.dp))
 
         Row(
@@ -138,6 +139,7 @@ fun MapShowMarkContent(
 
 @Composable
 fun ImagePickerCard(
+    imageUrl: String,
     modifier: Modifier = Modifier,
     onClick: () -> Unit
 ) {
@@ -145,9 +147,9 @@ fun ImagePickerCard(
         contentAlignment = Alignment.BottomEnd,
         modifier = Modifier.fillMaxWidth()
     ) {
-        Image(
-            painter = painterResource(id = ru.blackmirrror.map.R.drawable.tepliy_stan),
-            contentDescription = "Profile Picture",
+        AsyncImage(
+            model = imageUrl,
+            contentDescription = "Avatar",
             contentScale = ContentScale.Crop,
             modifier = Modifier
                 .fillMaxWidth()

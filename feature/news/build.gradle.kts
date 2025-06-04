@@ -61,7 +61,13 @@ dependencies {
     implementation(libs.hilt.navigation.compose)
     ksp(libs.hilt.android.compiler)
 
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.converter.json)
+    implementation(libs.retrofit.adapters.result)
+
     implementation(libs.coil.compose)
 
     implementation(project(":component"))
+    implementation(project(":core"))
+    implementation(project(":navigator"))
 }
