@@ -9,6 +9,7 @@ import ru.blackmirrror.core.di.BackendRetrofit
 import ru.blackmirrror.core.image_storage.FileRepository
 import ru.blackmirrror.core.provider.AccountProvider
 import ru.blackmirrror.core.provider.NetworkProvider
+import ru.blackmirrror.database.dao.MarkDao
 import ru.blackmirrror.map.data.MapApiService
 import ru.blackmirrror.map.data.MapRepositoryImpl
 import ru.blackmirrror.map.domain.MapRepository
@@ -29,12 +30,14 @@ class MapModule {
         accountProvider: AccountProvider,
         networkProvider: NetworkProvider,
         apiService: MapApiService,
+        markDao: MarkDao,
         fileRepository: FileRepository
     ): MapRepository {
         return MapRepositoryImpl(
             accountProvider = accountProvider,
             networkProvider = networkProvider,
             apiService = apiService,
+            markDao = markDao,
             fileRepository = fileRepository
         )
     }

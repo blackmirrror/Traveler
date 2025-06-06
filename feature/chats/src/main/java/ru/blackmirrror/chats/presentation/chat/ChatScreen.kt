@@ -93,19 +93,6 @@ fun ChatScreen() {
             ) {
                 Icon(Icons.Default.ArrowBack, contentDescription = "Отправить", tint = MaterialTheme.colorScheme.onBackground)
             }
-            AsyncImage(
-                model = "https://randomuser.me/api/portraits/women/17.jpg",
-                contentDescription = "Avatar",
-                modifier = Modifier
-                    .size(50.dp)
-                    .clip(CircleShape),
-                contentScale = ContentScale.Crop
-            )
-            Spacer(Modifier.width(16.dp))
-            Column {
-                Text("Анастасия", fontWeight = FontWeight.Bold)
-                Text(status, fontSize = 14.sp, color = MaterialTheme.colorScheme.onPrimaryContainer)
-            }
         }
 
         LazyColumn(

@@ -2,6 +2,7 @@ package ru.blackmirrror.map.data
 
 import android.util.Log
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.flow
 import ru.blackmirrror.core.exception.ApiErrorHandler
 import ru.blackmirrror.core.exception.EmptyData
@@ -12,6 +13,7 @@ import ru.blackmirrror.core.image_storage.FileRepository
 import ru.blackmirrror.core.provider.AccountProvider
 import ru.blackmirrror.core.provider.NetworkProvider
 import ru.blackmirrror.core.state.ResultState
+import ru.blackmirrror.database.dao.MarkDao
 import ru.blackmirrror.map.domain.MapRepository
 import java.io.File
 import javax.inject.Inject
@@ -20,8 +22,9 @@ class MapRepositoryImpl @Inject constructor(
     private val accountProvider: AccountProvider,
     private val networkProvider: NetworkProvider,
     private val apiService: MapApiService,
+    private val markDao: MarkDao,
     private val fileRepository: FileRepository
-): MapRepository {
+) : MapRepository {
 
     override fun isInternetConnection(): Boolean {
         return networkProvider.isInternetConnection()
@@ -51,13 +54,23 @@ class MapRepositoryImpl @Inject constructor(
                         else
                             emit(ResultState.Error(EmptyData))
                     }
-                    emit(ResultState.Error(ServerError))
+                    emitAll(getAllMarksLocal(ServerError))
                 } else {
-                    emit(ResultState.Error(NoInternet))
+                    emitAll(getAllMarksLocal(NoInternet))
                 }
             }
         }
     }
+
+    private fun getAllMarksLocal(error: Exception? = null): Flow<ResultState<List<MarkLatLngDto>>> =
+        flow {
+            val result = markDao.getAllMarks()
+            if (result.isEmpty()) {
+                emit(ResultState.Error(EmptyData))
+            } else if (error != null) {
+                emit(ResultState.Error(error, result.map { it.toMarkLatLngDto() }))
+            }
+        }
 
     override suspend fun getMark(markId: Long): Flow<ResultState<MarkDto>> {
         val userId = getUserId()
@@ -72,13 +85,23 @@ class MapRepositoryImpl @Inject constructor(
                         else
                             emit(ResultState.Error(EmptyData))
                     }
-                    emit(ResultState.Error(ServerError))
+                    emitAll(getMarkLocal(markId, ServerError))
                 } else {
-                    emit(ResultState.Error(NoInternet))
+                    emitAll(getMarkLocal(markId, NoInternet))
                 }
             }
         }
     }
+
+    private fun getMarkLocal(markId: Long, error: Exception? = null): Flow<ResultState<MarkDto>> =
+        flow {
+            val result = markDao.getMarkById(markId)
+            if (result == null) {
+                emit(ResultState.Error(EmptyData))
+            } else if (error != null) {
+                emit(ResultState.Error(error, result.toMarkDto()))
+            }
+        }
 
     override suspend fun createMark(mark: MarkDto, file: File?): Flow<ResultState<MarkDto>> {
         return ApiErrorHandler.handleErrors {
@@ -97,6 +120,7 @@ class MapRepositoryImpl @Inject constructor(
                                             res.body()!!.imageUrl = imageUrl
                                             emit(ResultState.Success(res.body()!!))
                                         }
+
                                         is ResultState.Error -> {
                                             Log.d("DDD", "createMark: ")
                                             res.body()!!.imageUrl = null
@@ -105,8 +129,7 @@ class MapRepositoryImpl @Inject constructor(
                                     }
                                 }
                             }
-                        }
-                        else
+                        } else
                             emit(ResultState.Error(EmptyData))
                     }
                     emit(ResultState.Error(ServerError))
