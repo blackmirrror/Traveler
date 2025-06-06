@@ -137,7 +137,9 @@ fun PhoneEmailContent(state: ScreenState<PhoneEmailUiModel>, onIntent: (PhoneEma
             text = stringResource(R.string.auth_des_policy),
             style = MaterialTheme.typography.labelSmall,
             color = MaterialTheme.colorScheme.primary,
-            modifier = Modifier.clickable { /* Открыть политику */ }
+            modifier = Modifier.clickable {
+                // todo
+            }
         )
     }
 }

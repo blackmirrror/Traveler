@@ -1,6 +1,8 @@
 package ru.blackmirrror.destinations
 
 import androidx.navigation.NamedNavArgument
+import androidx.navigation.NavType
+import androidx.navigation.navArgument
 import ru.blackmirrror.navigator.NavigationDestination
 import ru.blackmirrror.navigator.hideBottomNamedArgument
 
@@ -10,11 +12,14 @@ object ChatDestination : NavigationDestination {
 
     override val arguments: List<NamedNavArgument>
         get() = listOf(
+            navArgument(CHAT_ID_PARAM) { type = NavType.LongType },
             hideBottomNamedArgument
         )
 
-    private const val CHAT_ROUTE = "chat"
-    private const val CHAT_BOTTOM_NAV_ROUTE = CHAT_ROUTE
+    const val CHAT_ID_PARAM = "chat_id"
 
-    fun createAccountEditRoute() = CHAT_ROUTE
+    private const val CHAT_ROUTE = "chat"
+    private const val CHAT_BOTTOM_NAV_ROUTE = "$CHAT_ROUTE/{$CHAT_ID_PARAM}"
+
+    fun createChatRoute(chatId: Long = 0) = "$CHAT_ROUTE/{$chatId}"
 }

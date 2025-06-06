@@ -7,7 +7,7 @@ import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import ru.blackmirrror.core.di.BackendRetrofit
 import ru.blackmirrror.core.image_storage.FileRepository
-import ru.blackmirrror.core.provider.AuthProvider
+import ru.blackmirrror.core.provider.AccountProvider
 import ru.blackmirrror.core.provider.NetworkProvider
 import ru.blackmirrror.data.PostApiService
 import ru.blackmirrror.data.PostRepositoryImpl
@@ -26,13 +26,13 @@ class PostModule {
 
     @Provides
     fun providePostRepository(
-        authProvider: AuthProvider,
+        accountProvider: AccountProvider,
         networkProvider: NetworkProvider,
         apiService: PostApiService,
         fileRepository: FileRepository
     ): PostRepository {
         return PostRepositoryImpl(
-            authProvider = authProvider,
+            accountProvider = accountProvider,
             networkProvider = networkProvider,
             apiService = apiService,
             fileRepository = fileRepository

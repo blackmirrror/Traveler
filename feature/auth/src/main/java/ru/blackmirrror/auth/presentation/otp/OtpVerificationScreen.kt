@@ -36,9 +36,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import ru.blackmirrror.auth.presentation.phoneemail.PhoneEmailContent
-import ru.blackmirrror.auth.presentation.phoneemail.PhoneEmailEvent
-import ru.blackmirrror.auth.presentation.phoneemail.PhoneEmailUiModel
 import ru.blackmirrror.component.R
 import ru.blackmirrror.component.ui.PopupHost
 import ru.blackmirrror.core.exception.NoInternet

@@ -9,7 +9,7 @@ import ru.blackmirrror.core.exception.ImageNotUploaded
 import ru.blackmirrror.core.exception.NoInternet
 import ru.blackmirrror.core.exception.ServerError
 import ru.blackmirrror.core.image_storage.FileRepository
-import ru.blackmirrror.core.provider.AuthProvider
+import ru.blackmirrror.core.provider.AccountProvider
 import ru.blackmirrror.core.provider.NetworkProvider
 import ru.blackmirrror.core.state.ResultState
 import ru.blackmirrror.domain.PostRepository
@@ -17,7 +17,7 @@ import java.io.File
 import javax.inject.Inject
 
 class PostRepositoryImpl @Inject constructor(
-    private val authProvider: AuthProvider,
+    private val accountProvider: AccountProvider,
     private val networkProvider: NetworkProvider,
     private val apiService: PostApiService,
     private val fileRepository: FileRepository
@@ -28,7 +28,7 @@ class PostRepositoryImpl @Inject constructor(
     }
 
     private fun getUserId(): Long {
-        return authProvider.getUserId()
+        return accountProvider.getUser()?.id ?: 0
     }
 
     override suspend fun getAllPosts(): Flow<ResultState<List<PostDto>>> {
@@ -51,13 +51,13 @@ class PostRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getPost(markId: Long): Flow<ResultState<PostDto>> {
+    override suspend fun getPost(postId: Long): Flow<ResultState<PostDto>> {
         val userId = getUserId()
         return ApiErrorHandler.handleErrors {
             flow {
                 emit(ResultState.Loading())
                 if (isInternetConnection()) {
-                    val res = apiService.getMark(markId, userId)
+                    val res = apiService.getPost(postId, userId)
                     if (res.isSuccessful) {
                         if (res.body() != null)
                             emit(ResultState.Success(res.body()!!))
@@ -105,18 +105,6 @@ class PostRepositoryImpl @Inject constructor(
                 } else {
                     emit(ResultState.Error(NoInternet))
                 }
-            }
-        }
-    }
-
-    private suspend fun uploadImage(file: File) {
-        fileRepository.uploadImage(file).collect { result ->
-            when (result) {
-                is ResultState.Loading -> {}
-                is ResultState.Success -> {
-                    val imageUrl = fileRepository.getImageUrl(file.name)
-                }
-                is ResultState.Error -> {}
             }
         }
     }

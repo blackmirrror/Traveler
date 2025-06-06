@@ -50,7 +50,10 @@ class OtpVerificationViewModel @Inject constructor(
             authRepository.verifyPhoneOtp(code).collect { result ->
                 when (result) {
                     is ResultState.Loading -> {}
-                    is ResultState.Success -> travelerNavigator.navigateToMain()
+                    is ResultState.Success -> {
+                        // todo refactor
+                        popBackStack()
+                    }
                     is ResultState.Error -> {
                         _state.value = ScreenState.Error(
                             data = _state.value.data,

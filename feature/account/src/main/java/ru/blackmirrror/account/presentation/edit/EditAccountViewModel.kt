@@ -15,6 +15,7 @@ import ru.blackmirrror.core.image_storage.FileRepository
 import ru.blackmirrror.core.state.ResultState
 import ru.blackmirrror.core.state.ScreenState
 import ru.blackmirrror.destinations.AuthPhoneEmailDestination
+import ru.blackmirrror.navigator.NavigatorResult
 import ru.blackmirrror.navigator.TravelerNavigator
 import java.io.File
 import javax.inject.Inject
@@ -58,7 +59,7 @@ class EditAccountViewModel @Inject constructor(
 
     private fun editPhone() {
         navigate(
-            AuthPhoneEmailDestination.createAuthEnterOtpRoute(
+            AuthPhoneEmailDestination.createAuthPhoneEmailRoute(
                 data = state.value.data?.phone ?: NULL_DATA_STRING,
                 isPhone = true
             )
@@ -67,7 +68,7 @@ class EditAccountViewModel @Inject constructor(
 
     private fun editEmail() {
         navigate(
-            AuthPhoneEmailDestination.createAuthEnterOtpRoute(
+            AuthPhoneEmailDestination.createAuthPhoneEmailRoute(
                 data = state.value.data?.email ?: NULL_DATA_STRING,
                 isPhone = false
             )
@@ -83,7 +84,8 @@ class EditAccountViewModel @Inject constructor(
             accountRepository.updateUser(user).collect { res ->
                 when (res) {
                     is ResultState.Success -> {
-                        navigateToMain()
+                        travelerNavigator.sendResult(NavigatorResult.UserUpdated)
+                        travelerNavigator.popBackStack()
                     }
                     is ResultState.Loading -> {}
                     is ResultState.Error -> {}

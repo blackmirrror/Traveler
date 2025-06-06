@@ -1,6 +1,5 @@
 package ru.blackmirrror.account.presentation
 
-import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import ru.blackmirrror.account.R

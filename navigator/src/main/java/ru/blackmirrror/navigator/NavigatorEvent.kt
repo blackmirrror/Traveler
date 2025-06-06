@@ -12,6 +12,4 @@ sealed class NavigatorEvent {
     ) : NavigatorEvent()
 
     object PopBackStack : NavigatorEvent()
-
-    object NavigateToMain : NavigatorEvent()
 }

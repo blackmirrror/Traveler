@@ -1,13 +1,16 @@
 package ru.blackmirrror.navigator
 
 sealed class NavigatorResult {
+
     data class FiltersApplied(
         val categories: List<Any>?,
-        val radius: Int?,
-        val minRating: Int?
+        val radius: Double?,
+        val minRating: Double?
     ) : NavigatorResult()
 
     object CreateMark: NavigatorResult()
 
-    object UpdMess: NavigatorResult()
+    object ChatUpdated: NavigatorResult()
+
+    object UserUpdated: NavigatorResult()
 }

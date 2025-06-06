@@ -1,6 +1,6 @@
 package ru.blackmirrror.account.domain.model
 
-import ru.blackmirrror.account.data.api.UserDto
+import ru.blackmirrror.core.api.UserDto
 
 
 fun UserDto.toDomain(): User = User(
@@ -12,7 +12,7 @@ fun UserDto.toDomain(): User = User(
     lastName = lastName,
     birthDate = birthDate,
     photoUrl = photoUrl,
-    isOnline = isOnline,
+    isOnline = online,
     lastSeen = lastSeen,
 )
 
@@ -25,6 +25,6 @@ fun User.toDto(): UserDto = UserDto(
     lastName = lastName,
     birthDate = birthDate,
     photoUrl = photoUrl,
-    isOnline = isOnline,
+    online = isOnline,
     lastSeen = lastSeen,
 )

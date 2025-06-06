@@ -3,7 +3,6 @@ package ru.blackmirrror.bottom_navigation
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 
-
 object MapRoute : BottomNavigationEntry(MAP, R.string.bottom_nav_title_map)
 object NewsRoute : BottomNavigationEntry(NEWS, R.string.bottom_nav_title_news)
 object ChatsRoute : BottomNavigationEntry(CHATS, R.string.bottom_nav_title_chats)

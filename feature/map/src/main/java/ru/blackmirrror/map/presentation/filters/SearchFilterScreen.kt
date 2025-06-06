@@ -12,7 +12,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableIntStateOf
@@ -31,8 +30,6 @@ import ru.blackmirrror.map.domain.Category
 import ru.blackmirrror.map.presentation.DragHandleBar
 import ru.blackmirrror.map.presentation.RatingStars
 import ru.blackmirrror.map.presentation.TypeSelection
-import ru.blackmirrror.map.presentation.map.MapEvent
-import ru.blackmirrror.map.presentation.map.MapScreenViewModel
 import ru.blackmirrror.component.R as CommonR
 
 @Composable
@@ -57,7 +54,11 @@ fun SearchFilterScreen() {
         onRadiusChange = { radius = it },
         rating = minRating,
         onRatingChange = { minRating = it },
-        onApplyFilters = { vm.applyFilters() }
+        onApplyFilters = { vm.processEvent(FilterEvent.ApplyFilters(
+            categories = selectedCategories.toList(),
+            radius = radius.toDouble(),
+            minRating = minRating.toDouble()
+        )) }
     )
 }
 

@@ -17,12 +17,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.core.view.WindowCompat
-import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.plusAssign
 import dagger.hilt.android.AndroidEntryPoint
-import ru.blackmirrror.bottom_navigation.BottomNavigationEntry.Companion.ACCOUNT
 import ru.blackmirrror.bottom_navigation.TravelerBottomNavigation
 import ru.blackmirrror.bottom_navigation.MapRoute
 import ru.blackmirrror.navigator.TravelerNavigator
@@ -73,14 +71,6 @@ fun TravelerScaffold(travelerNavigator: TravelerNavigator) {
                 }
                 is NavigatorEvent.PopBackStack -> {
                     navController.popBackStack()
-                }
-                is NavigatorEvent.NavigateToMain -> {
-                    navController.navigate(ACCOUNT) {
-                        popUpTo(navController.graph.findStartDestination().id) {
-                            inclusive = true
-                        }
-                        launchSingleTop = true
-                    }
                 }
             }
         }

@@ -16,6 +16,7 @@ import ru.blackmirrror.core.state.ResultState
 import ru.blackmirrror.core.state.ScreenState
 import ru.blackmirrror.destinations.AccountEditDestination
 import ru.blackmirrror.destinations.AuthPhoneEmailDestination
+import ru.blackmirrror.navigator.NavigatorResult
 import ru.blackmirrror.navigator.TravelerNavigator
 import javax.inject.Inject
 
@@ -29,7 +30,19 @@ class AccountScreenViewModel @Inject constructor(
     val state: StateFlow<ScreenState<User>> = _state.asStateFlow()
 
     init {
+        observeNavigationResults()
         processEvent(AccountEvent.LoadAccount)
+    }
+
+    private fun observeNavigationResults() {
+        viewModelScope.launch {
+            results.collect { result ->
+                when (result) {
+                    is NavigatorResult.UserUpdated -> loadAccount()
+                    else -> Unit
+                }
+            }
+        }
     }
 
     fun processEvent(intent: AccountEvent) {
@@ -63,7 +76,7 @@ class AccountScreenViewModel @Inject constructor(
         viewModelScope.launch {
             val result = accountRepository.logout()
             if (result.isSuccess) {
-                AuthPhoneEmailDestination.createAuthEnterOtpRoute(
+                AuthPhoneEmailDestination.createAuthPhoneEmailRoute(
                     data = NULL_DATA_STRING,
                     isPhone = true
                 )
@@ -99,7 +112,7 @@ class AccountScreenViewModel @Inject constructor(
 
     private fun toAuth() {
         navigate(
-            AuthPhoneEmailDestination.createAuthEnterOtpRoute(
+            AuthPhoneEmailDestination.createAuthPhoneEmailRoute(
                 data = NULL_DATA_STRING,
                 isPhone = true
             )

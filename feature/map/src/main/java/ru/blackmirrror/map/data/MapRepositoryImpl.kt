@@ -3,24 +3,21 @@ package ru.blackmirrror.map.data
 import android.util.Log
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import ru.blackmirrror.core.api.UserDto
 import ru.blackmirrror.core.exception.ApiErrorHandler
 import ru.blackmirrror.core.exception.EmptyData
 import ru.blackmirrror.core.exception.ImageNotUploaded
 import ru.blackmirrror.core.exception.NoInternet
 import ru.blackmirrror.core.exception.ServerError
 import ru.blackmirrror.core.image_storage.FileRepository
-import ru.blackmirrror.core.provider.AuthProvider
+import ru.blackmirrror.core.provider.AccountProvider
 import ru.blackmirrror.core.provider.NetworkProvider
 import ru.blackmirrror.core.state.ResultState
-import ru.blackmirrror.map.domain.Category
 import ru.blackmirrror.map.domain.MapRepository
-import ru.blackmirrror.map.domain.model.Mark
 import java.io.File
 import javax.inject.Inject
 
 class MapRepositoryImpl @Inject constructor(
-    private val authProvider: AuthProvider,
+    private val accountProvider: AccountProvider,
     private val networkProvider: NetworkProvider,
     private val apiService: MapApiService,
     private val fileRepository: FileRepository
@@ -31,7 +28,7 @@ class MapRepositoryImpl @Inject constructor(
     }
 
     private fun getUserId(): Long {
-        return authProvider.getUserId()
+        return accountProvider.getUser()?.id ?: 0
     }
 
     override fun getAllMarks(
@@ -240,18 +237,6 @@ class MapRepositoryImpl @Inject constructor(
                 } else {
                     emit(ResultState.Error(NoInternet))
                 }
-            }
-        }
-    }
-
-    private suspend fun uploadImage(file: File) {
-        fileRepository.uploadImage(file).collect { result ->
-            when (result) {
-                is ResultState.Loading -> {}
-                is ResultState.Success -> {
-                    val imageUrl = fileRepository.getImageUrl(file.name)
-                }
-                is ResultState.Error -> {}
             }
         }
     }

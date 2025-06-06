@@ -1,20 +1,11 @@
 package ru.blackmirrror.map.domain
 
 import kotlinx.coroutines.flow.Flow
-import retrofit2.Response
-import retrofit2.http.Body
-import retrofit2.http.DELETE
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.PUT
-import retrofit2.http.Path
-import retrofit2.http.Query
 import ru.blackmirrror.core.state.ResultState
 import ru.blackmirrror.map.data.MarkCategoryDto
 import ru.blackmirrror.map.data.MarkDto
 import ru.blackmirrror.map.data.MarkLatLngDto
 import ru.blackmirrror.map.data.MarkReviewDto
-import ru.blackmirrror.map.domain.model.Mark
 import java.io.File
 
 interface MapRepository {

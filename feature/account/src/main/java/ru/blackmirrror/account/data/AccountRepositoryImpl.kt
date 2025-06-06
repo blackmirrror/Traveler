@@ -1,6 +1,5 @@
 package ru.blackmirrror.account.data
 
-import android.util.Log
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import ru.blackmirrror.account.data.api.AccountApiService
@@ -8,7 +7,7 @@ import ru.blackmirrror.account.domain.AccountRepository
 import ru.blackmirrror.account.domain.model.User
 import ru.blackmirrror.account.domain.model.toDomain
 import ru.blackmirrror.account.domain.model.toDto
-import ru.blackmirrror.account.presentation.toDate
+import ru.blackmirrror.core.api.UserDto
 import ru.blackmirrror.core.exception.ApiErrorHandler
 import ru.blackmirrror.core.exception.EmptyData
 import ru.blackmirrror.core.exception.NoInternet
@@ -27,6 +26,10 @@ internal class AccountRepositoryImpl @Inject constructor(
 
     override fun isInternetConnection(): Boolean {
         return networkProvider.isInternetConnection()
+    }
+
+    override fun getUserFromPrefs(): UserDto? {
+        return accountSharedPrefs.getUserFromPrefs()?.toDto()
     }
 
     override suspend fun getUser(): Flow<ResultState<User>> {

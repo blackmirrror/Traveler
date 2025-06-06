@@ -1,6 +1,5 @@
 package ru.blackmirrror.presentation
 
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,8 +17,7 @@ import javax.inject.Inject
 @HiltViewModel
 class PostScreenViewModel @Inject constructor(
     private val travelerNavigator: TravelerNavigator,
-    private val postRepository: PostRepository,
-    private val savedStateHandle: SavedStateHandle
+    private val postRepository: PostRepository
 ) : ViewModel(), TravelerNavigator by travelerNavigator {
 
     private val _state = MutableStateFlow<ScreenState<List<PostDto>>>(ScreenState.Loading())

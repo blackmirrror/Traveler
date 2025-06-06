@@ -15,6 +15,4 @@ interface TravelerNavigator {
     fun popBackStack()
 
     fun navigate(route: String, builder: NavOptionsBuilder.() -> Unit = { launchSingleTop = true }): Boolean
-
-    fun navigateToMain()
 }

@@ -40,18 +40,24 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import ru.blackmirrror.component.R
 import ru.blackmirrror.component.ui.TextFieldOneLine
+import ru.blackmirrror.core.state.ScreenState
 import ru.blackmirrror.data.PostDto
 
 @Composable
 fun PostScreen() {
-    PostContent()
-}
-
-@Composable
-fun PostContent() {
 
     val vm: PostScreenViewModel = hiltViewModel()
     val state by vm.state.collectAsState()
+
+    PostContent(
+        state = state
+    )
+}
+
+@Composable
+fun PostContent(
+    state: ScreenState<List<PostDto>>
+) {
 
     var searchQuery by rememberSaveable { mutableStateOf("") }
 

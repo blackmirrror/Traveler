@@ -1,8 +1,6 @@
 package ru.blackmirrror.map.presentation.show
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -22,17 +20,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
-import ru.blackmirrror.core.api.UserDto
 import ru.blackmirrror.core.state.ScreenState
 import ru.blackmirrror.map.data.MarkDto
-import ru.blackmirrror.map.domain.Category
-import ru.blackmirrror.map.domain.model.Mark
 import ru.blackmirrror.map.presentation.DragHandleBar
 
 @Composable
@@ -83,7 +77,7 @@ fun MapShowMarkContent(
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        state.data?.imageUrl?.let { ImagePickerCard(imageUrl = it) { } }
+        state.data?.imageUrl?.let { ImagePickerCard(imageUrl = it) }
         Spacer(modifier = Modifier.height(8.dp))
 
         Row(
@@ -139,9 +133,7 @@ fun MapShowMarkContent(
 
 @Composable
 fun ImagePickerCard(
-    imageUrl: String,
-    modifier: Modifier = Modifier,
-    onClick: () -> Unit
+    imageUrl: String
 ) {
     Box(
         contentAlignment = Alignment.BottomEnd,

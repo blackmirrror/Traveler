@@ -19,7 +19,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Send
 import androidx.compose.material3.Divider
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -27,11 +26,10 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -44,32 +42,41 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import ru.blackmirrror.chats.data.MessageDto
+import ru.blackmirrror.chats.data.SocketEvent
 import ru.blackmirrror.component.R
+import ru.blackmirrror.core.state.ResultState
 
 @Composable
-fun ChatScreen(
-//    messages: List<ChatMessage>,
-//    onBack: () -> Unit,
-//    onSendMessage: (String) -> Unit
-) {
+fun ChatScreen() {
     val vm: ChatViewModel = hiltViewModel()
+    val state by vm.state.collectAsState()
 
     var inputText by remember { mutableStateOf("") }
-    var status by remember { mutableStateOf("14:15") }
+    var status by remember { mutableStateOf("") }
 
-
-    val messages = remember {
-        mutableStateListOf(
-            ChatMessage("Привет!", false),
-            ChatMessage("Как дела?", false),
-            ChatMessage("Да ничего", true),
-            ChatMessage("Я еще одно место нашла", false),
-            ChatMessage("Заброшенный храм под нерехтой, порос травой", false),
-            ChatMessage("Можно еще туда съездить в след раз", false)
-
-        )
+    when (state) {
+        is ResultState.Success -> {
+            val event = state.data?.socketEvent
+            when (event) {
+                is SocketEvent.NewMessage -> {
+                    vm.processEvent(ChatEvent.AddMessage(
+                        text = event.text,
+                        chatId = event.chatId,
+                        senderId = event.senderId
+                    ))
+                }
+                is SocketEvent.Typing -> {
+                    status = "typing"
+                }
+                is SocketEvent.MessageRead -> {
+                    status = "online"
+                }
+                is SocketEvent.SendMessage -> {}
+                null -> Unit
+            }
+        }
+        else -> Unit
     }
 
     Column(
@@ -82,9 +89,7 @@ fun ChatScreen(
             verticalAlignment = Alignment.CenterVertically
         ) {
             IconButton(
-                onClick = {
-                    vm.back()
-                },
+                onClick = { vm.processEvent(ChatEvent.Back) },
             ) {
                 Icon(Icons.Default.ArrowBack, contentDescription = "Отправить", tint = MaterialTheme.colorScheme.onBackground)
             }
@@ -109,15 +114,18 @@ fun ChatScreen(
                 .fillMaxWidth(),
             reverseLayout = true,
         ) {
-            items(messages.size) { idx ->
-                MessageBubble(messages[messages.size - idx - 1])
-                Spacer(modifier = Modifier.height(4.dp))
+            val messages = state.data?.messages
+            if (messages != null) {
+                items(messages.size) { idx ->
+                    val message = messages[messages.size - idx - 1]
+                    MessageBubble(message, message.senderId == vm.getUserId())
+                    Spacer(modifier = Modifier.height(4.dp))
+                }
             }
+
         }
 
         Spacer(Modifier.height(8.dp))
-
-        val coroutineScope = rememberCoroutineScope()
 
         Divider()
 
@@ -133,8 +141,8 @@ fun ChatScreen(
                 modifier = Modifier
                     .weight(1f)
                     .padding(end = 8.dp)
-                .clip(RoundedCornerShape(8.dp))
-                .background(MaterialTheme.colorScheme.primaryContainer),
+                    .clip(RoundedCornerShape(8.dp))
+                    .background(MaterialTheme.colorScheme.primaryContainer),
                 placeholder = { Text(stringResource(R.string.chats_hint_message)) },
                 singleLine = true,
                 textStyle = TextStyle(color = MaterialTheme.colorScheme.onBackground),
@@ -145,20 +153,11 @@ fun ChatScreen(
                     focusedContainerColor = MaterialTheme.colorScheme.primaryContainer,
                     unfocusedContainerColor = MaterialTheme.colorScheme.primaryContainer
                 )
-//                colors = TextFieldDefaults.textFieldColors(containerColor = MaterialTheme.colorScheme.surface)
             )
             IconButton(
                 onClick = {
                     if (inputText.isNotBlank()) {
-                        val userMessage = inputText.trim()
-                        messages.add(ChatMessage(userMessage, true))
-                        inputText = ""
-
-                        coroutineScope.launch {
-                            delay(5000)
-                            status = "в сети"
-                            messages.add(ChatMessage("гуд", false))
-                        }
+                        vm.processEvent(ChatEvent.SendMessage(inputText.trim()))
                     }
                 },
             ) {
@@ -170,20 +169,15 @@ fun ChatScreen(
     }
 }
 
-data class ChatMessage(
-    val text: String,
-    val isFromMe: Boolean
-)
-
 @Composable
-fun MessageBubble(message: ChatMessage) {
-    val alignment = if (message.isFromMe) Alignment.End else Alignment.Start
-    val bubbleColor = if (message.isFromMe) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.primaryContainer
-    val textColor = if (message.isFromMe) MaterialTheme.colorScheme.onBackground else MaterialTheme.colorScheme.onBackground
+fun MessageBubble(message: MessageDto, isFromCurrentUser: Boolean) {
+    val alignment = if (isFromCurrentUser) Alignment.End else Alignment.Start
+    val bubbleColor = if (isFromCurrentUser) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.primaryContainer
+    val textColor = if (isFromCurrentUser) MaterialTheme.colorScheme.onBackground else MaterialTheme.colorScheme.onBackground
 
     Row(
         modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = if (message.isFromMe) Arrangement.End else Arrangement.Start
+        horizontalArrangement = if (isFromCurrentUser) Arrangement.End else Arrangement.Start
     ) {
         Box(
             modifier = Modifier
@@ -194,4 +188,3 @@ fun MessageBubble(message: ChatMessage) {
         }
     }
 }
-

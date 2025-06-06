@@ -1,25 +1,20 @@
 package ru.blackmirrror.map.presentation.map
 
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.google.android.gms.maps.model.LatLng
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import ru.blackmirrror.core.api.UserDto
 import ru.blackmirrror.core.state.ResultState
 import ru.blackmirrror.core.state.ScreenState
 import ru.blackmirrror.destinations.MapCreateMarkDestination
+import ru.blackmirrror.destinations.MapFilterDestination
 import ru.blackmirrror.destinations.MapShowMarkDestination
-import ru.blackmirrror.destinations.SearchFilterDestination
-import ru.blackmirrror.map.data.MarkCategoryDto
 import ru.blackmirrror.map.data.MarkLatLngDto
 import ru.blackmirrror.map.domain.Category
 import ru.blackmirrror.map.domain.MapRepository
-import ru.blackmirrror.map.domain.model.Mark
 import ru.blackmirrror.map.domain.toMarkCategoryDto
 import ru.blackmirrror.navigator.NavigatorResult
 import ru.blackmirrror.navigator.TravelerNavigator
@@ -28,8 +23,7 @@ import javax.inject.Inject
 @HiltViewModel
 class MapScreenViewModel @Inject constructor(
     private val travelerNavigator: TravelerNavigator,
-    private val mapRepository: MapRepository,
-    private val savedStateHandle: SavedStateHandle
+    private val mapRepository: MapRepository
 ) : ViewModel(), TravelerNavigator by travelerNavigator {
 
     private val _state = MutableStateFlow<ScreenState<List<MarkLatLngDto>>>(ScreenState.Loading())
@@ -44,23 +38,17 @@ class MapScreenViewModel @Inject constructor(
         viewModelScope.launch {
             results.collect { result ->
                 when (result) {
-//                    is NavigatorResult.FiltersApplied -> {
-//                        loadMarks(
-//                            categories = listOf(Category.HIKE, Category.BARBEQUE, Category.FISHING),
-//                            radius = null,
-//                            minRating = 4,
-//
-//                        )
-//                    }
-//                    is NavigatorResult.CreateMark -> {
-//                        val new = state.value.data!!.toMutableList()
-//                        new.add(
-//                            Mark(21, 55.638569, 37.487416, "Любимый теплый стан", null,
-//                                "https://example.com/sadovniki.jpg", 93, 4, listOf(Category.BARBEQUE, Category.BEACH), UserDto(20, "Karina", "", phone = "", online = false),
-//                                System.currentTimeMillis(), System.currentTimeMillis())
-//                        )
-//                        _state.value = ScreenState.Success(new)
-//                    }
+                    is NavigatorResult.FiltersApplied -> {
+                        loadMarks(
+                            categories = result.categories as? List<Category>?,
+                            distance = result.radius,
+                            minRating = result.minRating,
+
+                        )
+                    }
+                    is NavigatorResult.CreateMark -> {
+                        processEvent(MapEvent.LoadMarks())
+                    }
                     else -> Unit
                 }
             }
@@ -76,10 +64,7 @@ class MapScreenViewModel @Inject constructor(
                 lon = event.lon,
                 categories = event.categories,
             )
-            is MapEvent.ToSearchFilters -> navigate(SearchFilterDestination.createMapFilterRoute(
-                lat = event.lat.toString(),
-                lon = event.lon.toString()
-            ))
+            is MapEvent.ToSearchFilters -> navigate(MapFilterDestination.createMapFilterRoute())
             is MapEvent.ToShowMark -> navigate(MapShowMarkDestination.createMapShowMarkRoute(event.id))
             is MapEvent.ToCreateMark -> createMark(
                 lat = event.lat.toString(),

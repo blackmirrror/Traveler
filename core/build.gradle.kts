@@ -16,6 +16,7 @@ android {
         consumerProguardFiles("consumer-rules.pro")
 
         buildConfigField("String", "BACKEND_BASE_URL", "\"${project.property("BACKEND_BASE_URL")}\"")
+        buildConfigField("String", "BACKEND_HOST", "\"${project.property("BACKEND_HOST")}\"")
         buildConfigField("String", "SUPABASE_BASE_URL", "\"${project.property("SUPABASE_BASE_URL")}\"")
         buildConfigField("String", "SUPABASE_API_KEY", "\"${project.property("SUPABASE_API_KEY")}\"")
         buildConfigField("String", "SUPABASE_BUCKET_NAME", "\"${project.property("SUPABASE_BUCKET_NAME")}\"")

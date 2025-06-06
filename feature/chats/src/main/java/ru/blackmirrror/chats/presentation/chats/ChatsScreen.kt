@@ -34,11 +34,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
-import ru.blackmirrror.chats.domain.Chat
+import ru.blackmirrror.chats.data.ChatDto
 import ru.blackmirrror.component.R
 import ru.blackmirrror.component.screen.UnauthorizedScreen
 import ru.blackmirrror.component.ui.TextFieldOneLine
 import ru.blackmirrror.core.exception.NoAuthorized
+import ru.blackmirrror.core.state.ResultState
 import ru.blackmirrror.core.state.ScreenState
 
 @Composable
@@ -48,13 +49,13 @@ fun ChatsScreen() {
     val state by vm.state.collectAsState()
 
     when (state) {
-        is ScreenState.Loading -> {}
-        is ScreenState.Success -> ChatsContent(
-            state = state as ScreenState.Success,
+        is ResultState.Loading -> {}
+        is ResultState.Success -> ChatsContent(
+            state = state as ResultState.Success,
             onIntent = { vm.processEvent(it) }
         )
-        is ScreenState.Error -> {
-            val error = (state as ScreenState.Error).error
+        is ResultState.Error -> {
+            val error = (state as ResultState.Error).error
             when (error) {
                 is NoAuthorized -> UnauthorizedScreen {
                     vm.processEvent(ChatsEvent.ToAuth)
@@ -66,7 +67,7 @@ fun ChatsScreen() {
 
 @Composable
 fun ChatsContent(
-    state: ScreenState<List<Chat>>,
+    state: ResultState<List<ChatDto>>,
     onIntent: (ChatsEvent) -> Unit
 ) {
 
@@ -104,31 +105,22 @@ fun ChatsContent(
 
 @Composable
 fun ChatItem(
-    chat: Chat,
+    chat: ChatDto,
     onIntent: (ChatsEvent) -> Unit
 ) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable { onIntent(ChatsEvent.ToChat) }
+            .clickable { onIntent(ChatsEvent.ToChat(chat.chatId)) }
             .padding(horizontal = 16.dp, vertical = 8.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-//        Image(
-//            painter = painterResource(id = ChatsR.drawable.ic_face),
-//            contentDescription = "Avatar",
-//            contentScale = ContentScale.Crop,
-//            modifier = Modifier
-//                .size(50.dp)
-//                .clip(CircleShape)
-//        )
         AsyncImage(
-            model = chat.avatar,
+            model = chat.imageUrl,
             contentDescription = "Avatar",
             modifier = Modifier
                 .size(50.dp)
                 .clip(CircleShape),
-//                .border(2.dp, MaterialTheme.colorScheme.onPrimaryContainer, CircleShape),
             contentScale = ContentScale.Crop
         )
 
@@ -140,7 +132,7 @@ fun ChatItem(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = chat.name,
+                    text = chat.title,
                     fontWeight = FontWeight.Bold,
                     fontSize = 16.sp,
                     modifier = Modifier.weight(1f),
@@ -148,7 +140,7 @@ fun ChatItem(
                 )
 
                 Text(
-                    text = chat.time,
+                    text = chat.lastMessageTime.toString(),
                     fontSize = 12.sp,
                     color = MaterialTheme.colorScheme.onPrimaryContainer
                 )
@@ -161,7 +153,7 @@ fun ChatItem(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = chat.lastMessage,
+                    text = chat.lastMessage.toString(),
                     fontSize = 14.sp,
                     color = MaterialTheme.colorScheme.onPrimaryContainer,
                     maxLines = 1,

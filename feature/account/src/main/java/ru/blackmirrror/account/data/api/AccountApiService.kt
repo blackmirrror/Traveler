@@ -2,6 +2,7 @@ package ru.blackmirrror.account.data.api
 
 import retrofit2.Response
 import retrofit2.http.*
+import ru.blackmirrror.core.api.UserDto
 
 interface AccountApiService {
 

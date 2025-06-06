@@ -2,12 +2,6 @@ package ru.blackmirrror.data
 
 import ru.blackmirrror.core.api.UserDto
 
-data class MarkLatLngDto(
-    val id: Long,
-    val lat: Double,
-    val lon: Double
-)
-
 data class PostDto (
     var id            : Long?             = null,
     var latitude      : Double?           = null,

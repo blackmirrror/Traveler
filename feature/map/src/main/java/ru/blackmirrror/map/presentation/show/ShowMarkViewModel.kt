@@ -8,22 +8,19 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import ru.blackmirrror.core.api.UserDto
 import ru.blackmirrror.core.state.ResultState
 import ru.blackmirrror.core.state.ScreenState
 import ru.blackmirrror.destinations.MapShowMarkDestination.MARK_ID_PARAM
 import ru.blackmirrror.map.data.MarkDto
-import ru.blackmirrror.map.domain.Category
 import ru.blackmirrror.map.domain.MapRepository
-import ru.blackmirrror.map.domain.model.Mark
 import ru.blackmirrror.navigator.TravelerNavigator
 import javax.inject.Inject
 
 @HiltViewModel
 class ShowMarkViewModel @Inject constructor(
     private val mapRepository: MapRepository,
-    private val savedStateHandle: SavedStateHandle,
     private val travelerNavigator: TravelerNavigator,
+    savedStateHandle: SavedStateHandle,
 ) : ViewModel(), TravelerNavigator by travelerNavigator {
 
     private var _state = MutableStateFlow<ScreenState<MarkDto>>(ScreenState.Loading())
@@ -33,7 +30,7 @@ class ShowMarkViewModel @Inject constructor(
         val id = savedStateHandle.get<Long>(MARK_ID_PARAM)
 
         viewModelScope.launch {
-            val result = id?.let { mapRepository.getMark(it) }?.collect { mark ->
+            id?.let { mapRepository.getMark(it) }?.collect { mark ->
                 when(mark) {
                     is ResultState.Success -> {
                         _state.value = ScreenState.Success(mark.data)

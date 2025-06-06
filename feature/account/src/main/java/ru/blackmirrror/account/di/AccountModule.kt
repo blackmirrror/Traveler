@@ -12,6 +12,7 @@ import ru.blackmirrror.account.data.AccountSharedPrefs
 import ru.blackmirrror.account.data.api.AccountApiService
 import ru.blackmirrror.account.domain.AccountRepository
 import ru.blackmirrror.core.di.BackendRetrofit
+import ru.blackmirrror.core.provider.AccountProvider
 import ru.blackmirrror.core.provider.AuthProvider
 import ru.blackmirrror.core.provider.NetworkProvider
 import javax.inject.Singleton
@@ -45,5 +46,11 @@ class AccountModule {
             apiService = apiService,
             accountSharedPrefs = accountSharedPrefs
         )
+    }
+
+    @Provides
+    @Singleton
+    fun provideAccountProvider(accountProviderImpl: AccountProviderImpl): AccountProvider {
+        return accountProviderImpl
     }
 }

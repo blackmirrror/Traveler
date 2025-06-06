@@ -7,13 +7,11 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import ru.blackmirrror.chats.domain.Chat
+import ru.blackmirrror.chats.data.ChatDto
 import ru.blackmirrror.chats.domain.ChatsRepository
 import ru.blackmirrror.core.NULL_DATA_STRING
-import ru.blackmirrror.core.api.UserDto
 import ru.blackmirrror.core.exception.NoAuthorized
-import ru.blackmirrror.core.exception.NoData
-import ru.blackmirrror.core.state.ScreenState
+import ru.blackmirrror.core.state.ResultState
 import ru.blackmirrror.destinations.AuthPhoneEmailDestination
 import ru.blackmirrror.destinations.ChatDestination
 import ru.blackmirrror.navigator.NavigatorResult
@@ -26,8 +24,8 @@ class ChatsScreenViewModel @Inject constructor(
     private val chatsRepository: ChatsRepository
 ) : ViewModel(), TravelerNavigator by travelerNavigator {
 
-    private val _state = MutableStateFlow<ScreenState<List<Chat>>>(ScreenState.Loading())
-    val state: StateFlow<ScreenState<List<Chat>>> = _state.asStateFlow()
+    private val _state = MutableStateFlow<ResultState<List<ChatDto>>>(ResultState.Loading())
+    val state: StateFlow<ResultState<List<ChatDto>>> = _state.asStateFlow()
 
     init {
         observeNavigationResults()
@@ -38,19 +36,17 @@ class ChatsScreenViewModel @Inject constructor(
         viewModelScope.launch {
             results.collect { result ->
                 when (result) {
-                    is NavigatorResult.UpdMess -> {
-                        _state.value.data!!.get(0).unreadCount = 0
-                    }
+                    is NavigatorResult.ChatUpdated -> loadChats()
                     else -> Unit
                 }
             }
         }
     }
 
-    fun processEvent(intent: ChatsEvent) {
-        when (intent) {
+    fun processEvent(event: ChatsEvent) {
+        when (event) {
             is ChatsEvent.LoadChats -> loadChats()
-            is ChatsEvent.ToChat -> toChat()
+            is ChatsEvent.ToChat -> toChat(event.chatId)
             is ChatsEvent.ToAuth -> toAuth()
             is ChatsEvent.HideSnackbar -> hideSnackbar()
         }
@@ -58,26 +54,26 @@ class ChatsScreenViewModel @Inject constructor(
 
     private fun loadChats() {
         if (!chatsRepository.isAuthenticated()) {
-            _state.value = ScreenState.Error(NoAuthorized)
+            _state.value = ResultState.Error(NoAuthorized)
             return
         }
         viewModelScope.launch {
-            try {
-                val chats = chatsRepository.getChats()
-                _state.value = ScreenState.Success(chats)
-            } catch (e: Exception) {
-                _state.value = ScreenState.Error(NoData)
+            chatsRepository.getChats().collect { result ->
+                when (result) {
+                    is ResultState.Success -> _state.value = ResultState.Success(result.data)
+                    else -> Unit
+                }
             }
         }
     }
 
-    private fun toChat() {
-        navigate(ChatDestination.createAccountEditRoute())
+    private fun toChat(chatId: Long) {
+        navigate(ChatDestination.createChatRoute(chatId))
     }
 
     private fun toAuth() {
         navigate(
-            AuthPhoneEmailDestination.createAuthEnterOtpRoute(
+            AuthPhoneEmailDestination.createAuthPhoneEmailRoute(
                 data = NULL_DATA_STRING,
                 isPhone = true
             )
@@ -85,7 +81,7 @@ class ChatsScreenViewModel @Inject constructor(
     }
 
     private fun hideSnackbar() {
-        _state.value = ScreenState.Success(
+        _state.value = ResultState.Success(
             data = _state.value.data!!
         )
     }

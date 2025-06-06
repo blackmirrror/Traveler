@@ -1,10 +1,8 @@
 package ru.blackmirrror.account.presentation.edit
 
-import android.content.Context
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -38,12 +36,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import coil.compose.AsyncImage
 import ru.blackmirrror.account.domain.model.User
 import ru.blackmirrror.account.presentation.dateStringToLong
 import ru.blackmirrror.account.presentation.longToDateString
@@ -53,8 +51,6 @@ import ru.blackmirrror.component.ui.TextFieldWithEdit
 import ru.blackmirrror.component.ui.TextFieldWithMask
 import ru.blackmirrror.core.uriToFile
 import ru.blackmirrror.destinations.AuthPhoneEmailDestination
-import java.io.File
-import ru.blackmirrror.account.R as AccountR
 
 @Composable
 fun EditAccountScreen() {
@@ -116,14 +112,14 @@ fun EditAccountScreen() {
             contentAlignment = Alignment.BottomEnd,
             modifier = Modifier.size(120.dp)
         ) {
-            Image(
-                painter = painterResource(id = AccountR.drawable.cat),
-                contentDescription = "Profile Picture",
-                contentScale = ContentScale.Crop,
+            AsyncImage(
+                model = state.data?.photoUrl,
+                contentDescription = "Avatar",
                 modifier = Modifier
                     .size(120.dp)
                     .clip(CircleShape)
-                    .border(2.dp, MaterialTheme.colorScheme.onPrimaryContainer, CircleShape)
+                    .border(2.dp, MaterialTheme.colorScheme.onPrimaryContainer, CircleShape),
+                contentScale = ContentScale.Crop
             )
             IconButton(
                 onClick = { launcher.launch("image/*") },
@@ -166,7 +162,7 @@ fun EditAccountScreen() {
             label = stringResource(R.string.account_edit_hint_phone),
             onEditClick = {
                 vm.navigate(
-                    AuthPhoneEmailDestination.createAuthEnterOtpRoute(
+                    AuthPhoneEmailDestination.createAuthPhoneEmailRoute(
                         data = phoneNumber,
                         isPhone = true
                     )
@@ -182,7 +178,7 @@ fun EditAccountScreen() {
             label = stringResource(R.string.account_edit_hint_email),
             onEditClick = {
                 vm.navigate(
-                    AuthPhoneEmailDestination.createAuthEnterOtpRoute(
+                    AuthPhoneEmailDestination.createAuthPhoneEmailRoute(
                         data = "ekfk@gmail.com",
                         isPhone = false
                     )
@@ -222,4 +218,3 @@ fun EditAccountScreen() {
         }
     }
 }
-

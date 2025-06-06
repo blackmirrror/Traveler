@@ -26,7 +26,7 @@ import javax.inject.Inject
 class CreateMarkViewModel @Inject constructor(
     private val travelerNavigator: TravelerNavigator,
     private val mapRepository: MapRepository,
-    private val savedStateHandle: SavedStateHandle
+    savedStateHandle: SavedStateHandle
 ) : ViewModel(), TravelerNavigator by travelerNavigator {
 
     private val _state = MutableStateFlow<ScreenState<MarkDto>>(ScreenState.Loading())
@@ -35,7 +35,7 @@ class CreateMarkViewModel @Inject constructor(
     private val file = MutableStateFlow<ScreenState<File>>(ScreenState.Loading())
 
     init {
-        val lat = savedStateHandle.get<String>(LAT_PARAM)?.lowercase()!!
+        val lat = savedStateHandle.get<String>(LAT_PARAM)!!
         val lon = savedStateHandle.get<String>(LON_PARAM)!!
 
         _state.value = ScreenState.Success(

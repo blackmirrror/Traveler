@@ -16,6 +16,7 @@ import javax.inject.Inject
 class FileRepositoryImpl @Inject constructor(
     private val service: FileStorageApiService
 ): FileRepository {
+
     override fun uploadImage(file: File): Flow<ResultState<Unit>> = flow {
         emit(ResultState.Loading())
         val body = file.asRequestBody("image/*".toMediaTypeOrNull())
@@ -34,4 +35,3 @@ class FileRepositoryImpl @Inject constructor(
         return "${BuildConfig.SUPABASE_BASE_URL}object/public/${BuildConfig.SUPABASE_BUCKET_NAME}//$fileName"
     }
 }
-

@@ -36,11 +36,9 @@ import com.google.maps.android.compose.rememberCameraPositionState
 import ru.blackmirrror.component.loading.LoadingUI
 import ru.blackmirrror.core.state.ScreenState
 import ru.blackmirrror.map.data.MarkLatLngDto
-import ru.blackmirrror.map.domain.model.Mark
 import ru.blackmirrror.map.presentation.LocationPermissionScreen
 import ru.blackmirrror.map.utils.checkForPermission
 import ru.blackmirrror.map.utils.getCurrentLocation
-import ru.blackmirrror.map.utils.toListLatLng
 
 @Composable
 fun Map() {

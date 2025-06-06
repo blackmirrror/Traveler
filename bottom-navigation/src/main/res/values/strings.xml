@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="bottom_nav_title_map">Карта</string>
-    <string name="bottom_nav_title_news">Новости</string>
-    <string name="bottom_nav_title_chats">Чаты</string>
-    <string name="bottom_nav_title_account">Аккаунт</string>
+    <string name="bottom_nav_title_map">Map</string>
+    <string name="bottom_nav_title_news">News</string>
+    <string name="bottom_nav_title_chats">Chats</string>
+    <string name="bottom_nav_title_account">Account</string>
 </resources>

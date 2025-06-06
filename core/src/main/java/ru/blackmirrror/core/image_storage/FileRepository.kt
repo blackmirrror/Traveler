@@ -7,5 +7,6 @@ import java.io.File
 interface FileRepository {
 
     fun uploadImage(file: File): Flow<ResultState<Unit>>
+
     fun getImageUrl(fileName: String): String
 }

@@ -101,9 +101,11 @@ private class DataOffsetMapper(val mask: String, val numberChar: Char) : OffsetM
     override fun originalToTransformed(offset: Int): Int {
         var noneDigitCount = 0
         var i = 0
+
         while (i < offset + noneDigitCount) {
             if (mask[i++] != numberChar) noneDigitCount++
         }
+
         return offset + noneDigitCount
     }
 
